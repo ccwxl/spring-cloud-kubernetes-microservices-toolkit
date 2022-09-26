@@ -1,0 +1,51 @@
+import cn.nvr.iothub.dependency.DependencyLibrary
+
+plugins {
+    id('dependency.manager.plugin')
+}
+
+bootJar {
+    enabled true
+}
+
+group 'cn.nvr.microservices.toolkit'
+version = '0.0.1'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    //springboot lib
+    implementation(project(':spring-cloud-kubernetes-loadbalancer-debugging-starter'))
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    //kubernetes
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-discovery'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-loadbalancer'
+//    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-config'
+
+    //nvr lib
+
+    //springcloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+    implementation DependencyLibrary.SNAKEYAML
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

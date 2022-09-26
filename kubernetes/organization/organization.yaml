@@ -1,0 +1,152 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: wxl-spring-cloud-k8s
+  name: organization
+  labels:
+    app: organization
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - port: 8080
+      name: server
+      targetPort: 8080
+  selector:
+    app: organization
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: organization
+  name: organization
+  namespace: wxl-spring-cloud-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: organization
+  template:
+    metadata:
+      labels:
+        app: organization
+    spec:
+      initContainers:
+        - name: nvriot-biz-organization
+          image: app:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - cp
+            - /tmp/example-service-organization-0.0.1.jar
+            - /app/example-service-organization-0.0.1.jar
+          volumeMounts:
+            - mountPath: /app
+              name: jar-volume
+      containers:
+        - image: 221.214.10.82:81/base/ibm-semeru-runtimes:open-17.0.3_7-jdk
+          name: organization
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          command:
+            - "java"
+          args:
+            - "-Xshareclasses:name=organization,cacheDir=/class-cache,nonfatal,persistent,verbose"
+            - "-XX:+UseContainerSupport"
+            - "-XX:InitialRAMPercentage=95.0"
+            - "-XX:MaxRAMPercentage=95.0"
+            - "-XX:+HeapDumpOnOutOfMemoryError"
+            - "-XX:HeapDumpPath=./dump-%t.hprof"
+            - "-XX:+UnlockDiagnosticVMOptions"
+            - "-XX:+UnlockExperimentalVMOptions"
+            - "-XX:-OmitStackTraceInFastThrow"
+            - "-Xlog:gc*=debug:file=./gc-%t.log:utctime,level,tags:filecount=10,filesize=100M"
+            - "-Xlog:jit+compilation=info:file=./jit_compile-%t.log:utctime,level,tags:filecount=10,filesize=10M"
+            - "-Xlog:safepoint=debug:file=./safepoint-%t.log:utctime,level,tags:filecount=10,filesize=10M"
+            - "-XX:+DisableExplicitGC"
+            - "-XX:GuaranteedSafepointInterval=0"
+            - "-XX:+UseCountedLoopSafepoints"
+            - "-XX:StartFlightRecording=disk=true,maxsize=4096m,maxage=3d"
+            - "-XX:FlightRecorderOptions=maxchunksize=128m"
+            - "--add-opens"
+            - "java.base/java.lang=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.io=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.lang.invoke=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.lang.reflect=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.text=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.desktop/java.awt.font=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.math=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.net=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.nio=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.security=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.text=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.time=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.util=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/jdk.internal.access=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/jdk.internal.misc=ALL-UNNAMED"
+            - "-Dspring.profiles.active=dev"
+            - "-Dnacos.discovery.register.metadata.develop.common.service=true"
+            - "-Dnacos.discovery.register.metadata.deploy.k8s=true"
+            - "-Dnacos.address=nacos-service.nvriothub-platform-infrastructure:8848"
+            - "-Dredis.host=redis.nvriothub-platform-infrastructure"
+            - "-Dredis.port=6379"
+            - "-Dserver.port=8080"
+            - "-Duser.timezone=GMT+08"
+            - "-Dfile.encoding=UTF-8"
+            - "-Djava.security.egd=file:/dev/./urandom"
+            - "-Dnetworkaddress.cache.ttl=10"
+            - "-jar"
+            - "/app/example-service-organization-0.0.1.jar"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+          env:
+            - name: LANG
+              value: "zh_CN.UTF-8"
+            - name: user.language
+              value: "zh"
+            - name: user.region
+              value: "CN"
+          volumeMounts:
+            - mountPath: /app
+              name: jar-volume
+            - name: organization-class-cache
+              mountPath: /class-cache
+      volumes:
+        - name: jar-volume
+          emptyDir: { }
+        - name: organization-class-cache
+          hostPath:
+            path: /tmp/organization-class-cache
+            type: DirectoryOrCreate

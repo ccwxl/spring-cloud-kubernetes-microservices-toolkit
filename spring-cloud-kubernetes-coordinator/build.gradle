@@ -1,0 +1,88 @@
+import cn.nvr.iothub.dependency.DependencyLibrary
+
+plugins {
+    id('dependency.manager.plugin')
+    id 'distribution'
+}
+
+bootJar {
+    enabled true
+}
+
+group 'cn.nvr.microservices.toolkit'
+version = '0.0.1'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    implementation(project(":spring-cloud-kubernetes-loadbalancer-debugging-starter"))
+    implementation 'org.apache.apisix:apisix-runner-core:0.3.0'
+    implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-discovery'
+    implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-loadbalancer'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation DependencyLibrary.SNAKEYAML
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+//指定打包的tar包的名字，以及文件来源目录
+distributions {
+    main {
+        distributionBaseName = 'spring-cloud-kubernetes-apisix-routing-plugin'
+        contents {
+            from { 'build/package' }
+            exclude('*-plain.jar')
+        }
+    }
+}
+
+// task 用来新建一些目录，目录位于build/package下
+task createDirs() {
+    file('build/package/').mkdirs()
+    file('build/package/bin').mkdirs()
+}
+//task 用来复制build出来的主jar包
+task copyLibs(type: Copy) {
+    dependsOn(jar)
+    dependsOn(bootJar)
+    from('build/libs')
+    into('build/package/')
+}
+
+//task 用来复制bin下的脚本。这里的fileMode并没有生效，原因不详
+task copyBin(type: Copy) {
+    from('src/main/resources/bin')
+    into('build/package/bin')
+    fileMode 0744
+}
+
+//把上述的task串联起来
+task prepareFile(dependsOn: [
+        'createDirs',
+        'copyLibs',
+        'copyBin'
+]) {}
+
+distTar.dependsOn('prepareFile')
+distTar.compression = Compression.GZIP
+distTar.extension = 'tar.gz'
+distZip.dependsOn('prepareFile')
+
+//定义一个task，先build 然后再打包tar包
+task buildTar(dependsOn: [
+        'build',
+        distTar
+]) {}

@@ -1,0 +1,20 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/release' }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'spring-cloud-kubernetes-microservices-toolkit'
+
+include 'example-service-uaa',
+        'example-service-organization',
+        'example-service-account',
+        'spring-cloud-kubernetes-coordinator',
+//        'spring-cloud-kubernetes-configmap-ui',
+        'spring-cloud-kubernetes-loadbalancer-debugging-starter',
+        'spring-cloud-kubernetes-feign-debugging-starter'
+
+includeBuild('dependency-manager')

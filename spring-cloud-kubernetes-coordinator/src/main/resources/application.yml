@@ -1,0 +1,6 @@
+cache.config:
+  expired: ${APISIX_CONF_EXPIRE_TIME:10000}
+  capacity: 1000
+
+socket:
+  file: ${APISIX_LISTEN_ADDRESS:/tmp/runner.sock}
