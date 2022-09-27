@@ -3,9 +3,9 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: wxl-spring-cloud-k8s
-  name: uaa
+  name: coordinator
   labels:
-    app: uaa
+    app: coordinator
 spec:
   type: ClusterIP
   clusterIP: None
@@ -14,40 +14,40 @@ spec:
       name: server
       targetPort: 8080
   selector:
-    app: uaa
+    app: coordinator
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: uaa
-  name: uaa
+    app: coordinator
+  name: coordinator
   namespace: wxl-spring-cloud-k8s
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: uaa
+      app: coordinator
   template:
     metadata:
       labels:
-        app: uaa
+        app: coordinator
     spec:
       initContainers:
-        - name: nvriot-biz-uaa
+        - name: nvriot-biz-coordinator
           image: app:latest
           imagePullPolicy: IfNotPresent
           command:
             - cp
-            - /tmp/example-service-uaa-0.0.1.jar
-            - /app/example-service-uaa-0.0.1.jar
+            - /tmp/spring-cloud-kubernetes-coordinator-0.0.1.jar
+            - /app/spring-cloud-kubernetes-coordinator-0.0.1.jar
           volumeMounts:
             - mountPath: /app
               name: jar-volume
       containers:
         - image: 221.214.10.82:81/base/ibm-semeru-runtimes:open-17.0.3_7-jdk
-          name: uaa
+          name: coordinator
           resources:
             limits:
               cpu: 1000m
@@ -58,7 +58,7 @@ spec:
           command:
             - "java"
           args:
-            - "-Xshareclasses:name=uaa,cacheDir=/class-cache,nonfatal,persistent,verbose"
+            - "-Xshareclasses:name=coordinator,cacheDir=/class-cache,nonfatal,persistent,verbose"
             - "-XX:+UseContainerSupport"
             - "-XX:InitialRAMPercentage=95.0"
             - "-XX:MaxRAMPercentage=95.0"
@@ -105,14 +105,14 @@ spec:
             - "java.base/jdk.internal.access=ALL-UNNAMED"
             - "--add-opens"
             - "java.base/jdk.internal.misc=ALL-UNNAMED"
-            - "-Dspring.profiles.active=test"
             - "-Dserver.port=8080"
+            - "-Dspring.profiles.active=dev"
             - "-Duser.timezone=GMT+08"
             - "-Dfile.encoding=UTF-8"
             - "-Djava.security.egd=file:/dev/./urandom"
             - "-Dnetworkaddress.cache.ttl=10"
             - "-jar"
-            - "/app/example-service-uaa-0.0.1.jar"
+            - "/app/spring-cloud-kubernetes-coordinator-0.0.1.jar"
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -136,12 +136,12 @@ spec:
           volumeMounts:
             - mountPath: /app
               name: jar-volume
-            - name: uaa-class-cache
+            - name: coordinator-class-cache
               mountPath: /class-cache
       volumes:
         - name: jar-volume
           emptyDir: { }
-        - name: uaa-class-cache
+        - name: coordinator-class-cache
           hostPath:
-            path: /tmp/uaa-class-cache
+            path: /tmp/coordinator-class-cache
             type: DirectoryOrCreate
