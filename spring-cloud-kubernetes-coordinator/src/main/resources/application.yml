@@ -3,4 +3,4 @@ cache.config:
   capacity: 1000
 
 socket:
-  file: ${APISIX_LISTEN_ADDRESS:/tmp/runner.sock}
+  file: ${APISIX_LISTEN_ADDRESS:/tmp/apisix/apisix.sock}

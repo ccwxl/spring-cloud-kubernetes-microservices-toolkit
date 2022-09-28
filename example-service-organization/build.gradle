@@ -19,6 +19,8 @@ configurations {
 }
 
 dependencies {
+    implementation(project(':spring-cloud-kubernetes-loadbalancer-debugging-starter'))
+
     //springboot lib
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

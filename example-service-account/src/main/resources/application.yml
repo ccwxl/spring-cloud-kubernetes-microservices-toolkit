@@ -1,6 +1,8 @@
 spring:
   application:
     name: account
+  profiles:
+    active: test
   cloud:
     service-registry:
       auto-registration: # 将当前实例自动注册到注册中心
@@ -32,28 +34,8 @@ spring:
         ca-cert-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRFNU1USXhNekE0TURZeE1Wb1hEVEk1TVRJeE1EQTRNRFl4TVZvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBS3JWCnVUNC9jeUpKbENZTllTVlF2SWthZXhuYUcySHRoN2hWREJCR2U4N1dVSlJheWp5MktwemlIVU1oVWNiMkN4NnEKMDI4OE9mNXVZZDMycnpNeE1rejFra3QvNGE1QjhBMlVpMHFtMm0zY0tsMTZSKy9Yait6SnlieXZxZFM4S2xodwo3bEY1MlEvL2xyTlU5NVFuSHNMWHd0TVMwaFE1Wld4TlJJMXFpRUovZDVDNlQyK3YreGxrNk1KYlhOVWFUY1Y1CndTYWJZVjBBdFBUUzM3NnR5S0FxTUM5czYrc281K21OQzFLSyt3dmZNeWY2UW9BOWFvdUhsNFBNOWprVTlPOEYKRjBiZjdJL25JNWtYeW9wWTRRbyt1ekxTbUNFbTJmbWNWdWVmYy9DZTJKbU0yUWs3TDFqMU5UOG9ueDY2NFRpaQpQOTBuckFpMllILzd4ZzlqV1VjQ0F3RUFBYU1qTUNFd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFFRGwrQlhVeld3WGVtTWxkOGtzVy9SeXlPbWoKS3NqaUdtWDg0dVZqazlvVEx0RWZFY1ZvdngwRXdGWTZPZW0xb25nU3pwUG85a042eGt6VmFyY0gzUEJlRmY5NAp1dlpJM0pkVmlPSDMzVlFCVmh4YUJ5WVVOUFMxYzZpSGZtRGhEdE9lRlZlWGVnMkhqWXQ5R2ZHMFFERzNQVThKClh6bHRjbTFaZWFocnoxN3FiNmZSSDIzZjBOZU9ZaWtVRWtuRTlzSXN1R0RNVTNCSy9SKzhENDZBdVp3aTBYMHoKazg4VFh4amVzY1RRenZTbGo3SitFdGRaUDl5WEFDbHdCS29ZaEJ2ZXJ0RHJQRjZ4d3VrYUFDY1E0Z0ZiVlVHSQorcnI1djBJN0I2WVcrNWhhQ0RkNkg3bFIxRk5QT0NCK3QxNWUvSlBaRlQ3azY0SGhKbHNlTHoxS0lGOD0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
     discovery:
       enabled: true
-      client:
-        #静态服务发现配置的方式
-        simple:
-          instances:
-            account:
-              - instanceId: account
-                serviceId: account
-                host: 127.0.0.1
-                port: 9001
-                secure: false
-            uaa:
-              - instanceId: uaa
-                serviceId: uaa
-                host: 127.0.0.1
-                port: 9002
-                secure: false
-            organization:
-              - instanceId: organization
-                serviceId: organization
-                host: 127.0.0.1
-                port: 9003
-                secure: false
+    loadbalancer:
+      enable: true
 
 server:
   port: 9001

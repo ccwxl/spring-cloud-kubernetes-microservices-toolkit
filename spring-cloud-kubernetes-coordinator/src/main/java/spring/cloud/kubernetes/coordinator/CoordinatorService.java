@@ -9,13 +9,18 @@ import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProc
  * @author wxl
  * 适配
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"spring.cloud.kubernetes.coordinator", "org.apache.apisix.plugin.runner"})
 public class CoordinatorService {
 
     @Bean
     public ScheduledAnnotationBeanPostProcessor processor() {
 
         return new ScheduledAnnotationBeanPostProcessor();
+    }
+
+    @Bean(destroyMethod = "stop", initMethod = "start")
+    public Health health() {
+        return new Health();
     }
 
     public static void main(String[] args) {

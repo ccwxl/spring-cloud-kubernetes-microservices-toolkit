@@ -13,8 +13,6 @@ include 'example-service-uaa',
         'example-service-organization',
         'example-service-account',
         'spring-cloud-kubernetes-coordinator',
-//        'spring-cloud-kubernetes-configmap-ui',
-        'spring-cloud-kubernetes-loadbalancer-debugging-starter',
-        'spring-cloud-kubernetes-feign-debugging-starter'
+        'spring-cloud-kubernetes-loadbalancer-debugging-starter'
 
 includeBuild('dependency-manager')

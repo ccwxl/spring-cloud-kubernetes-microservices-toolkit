@@ -34,6 +34,7 @@ spec:
       labels:
         app: coordinator
     spec:
+
       initContainers:
         - name: nvriot-biz-coordinator
           image: app:latest
@@ -125,6 +126,8 @@ spec:
               name: jar-volume
             - name: coordinator-class-cache
               mountPath: /class-cache
+            - name: socket-runner
+              mountPath: /tmp/apisix
       volumes:
         - name: jar-volume
           emptyDir: { }
@@ -132,3 +135,6 @@ spec:
           hostPath:
             path: /tmp/coordinator-class-cache
             type: DirectoryOrCreate
+        - name: socket-runner
+          persistentVolumeClaim:
+            claimName: apisix-socket-file

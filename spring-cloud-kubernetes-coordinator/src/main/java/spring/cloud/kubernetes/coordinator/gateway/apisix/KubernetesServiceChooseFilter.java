@@ -19,7 +19,14 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
 
     @Override
     public void postFilter(PostRequest request, PostResponse response, PluginFilterChain chain) {
+        //获取到请求者的ip
 
+        //选一个合适的upstream
+
+        //放入到header中 x-apisix-original-dst-host
+
+        //识别当前是代理请求吗?
+        request.getUpstreamHeaders().put("spring-cloud-kubernetes-coordinator", "true");
         chain.postFilter(request, response);
     }
 }

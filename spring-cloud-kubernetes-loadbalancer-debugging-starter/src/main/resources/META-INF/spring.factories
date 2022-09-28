@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   spring.cloud.kubernetes.discovery.ext.KubernetesServiceRegistryAutoConfiguration,\
-  spring.cloud.kubernetes.discovery.ext.KubernetesAutoServiceRegistrationAutoConfiguration
+  spring.cloud.kubernetes.discovery.ext.KubernetesAutoServiceRegistrationAutoConfiguration,\
+  spring.cloud.kubernetes.loadbalancer.debugging.LoadBalanceAutoConfiguration
