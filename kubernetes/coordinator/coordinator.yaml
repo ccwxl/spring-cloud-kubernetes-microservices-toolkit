@@ -37,6 +37,13 @@ spec:
       initContainers:
         - name: wait-etcd
           image: busybox:1.28
+          resources:
+            limits:
+              cpu: 10m
+              memory: 10Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
           command:
             - sh
             - '-c'
@@ -56,6 +63,13 @@ spec:
           volumeMounts:
             - mountPath: /app
               name: jar-volume
+          resources:
+            limits:
+              cpu: 10m
+              memory: 10Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
       containers:
         - name: apisix
           image: apache/apisix:2.15.0-alpine
