@@ -48,7 +48,7 @@ spec:
           terminationMessagePolicy: File
           imagePullPolicy: IfNotPresent
         - name: nvriot-biz-coordinator
-          image: 221.214.10.82:81/wxl-spring-cloud-k8s/spring-cloud-kubernetes-coordinator:20220928135902
+          image: app:latest
           imagePullPolicy: IfNotPresent
           command:
             - cp
