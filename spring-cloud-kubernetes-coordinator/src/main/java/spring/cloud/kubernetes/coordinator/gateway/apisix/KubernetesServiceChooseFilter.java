@@ -1,5 +1,6 @@
 package spring.cloud.kubernetes.coordinator.gateway.apisix;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.apisix.plugin.runner.HttpRequest;
 import org.apache.apisix.plugin.runner.HttpResponse;
 import org.apache.apisix.plugin.runner.PostRequest;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
  * @author wxl
  * 负载均衡.
  */
+@Slf4j
 @Component
 public class KubernetesServiceChooseFilter implements PluginFilter {
 
@@ -22,8 +24,9 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
 
     @Override
     public void filter(HttpRequest request, HttpResponse response, PluginFilterChain chain) {
-        System.out.println("进入了插件!");
         response.setHeader("KubernetesServiceChooseFilter", "true");
+        String sourceIp = request.getSourceIP();
+        log.info("Req client Ip: [{}]", sourceIp);
         chain.filter(request, response);
     }
 }

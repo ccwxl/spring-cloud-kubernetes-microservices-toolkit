@@ -4,3 +4,7 @@ cache.config:
 
 socket:
   file: ${APISIX_LISTEN_ADDRESS:/dev/shm/apisix.sock}
+
+logging:
+  level:
+    org.apache.apisix.plugin.runner.HttpResponse: warn

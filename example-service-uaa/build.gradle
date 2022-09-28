@@ -36,6 +36,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     implementation 'com.github.ben-manes.caffeine:caffeine'
     implementation DependencyLibrary.SNAKEYAML
+    implementation DependencyLibrary.CAFFEINE
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
