@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor;
+import spring.cloud.kubernetes.coordinator.gateway.apisix.KubernetesServiceChooseFilter;
 
 /**
  * @author wxl
@@ -19,7 +20,8 @@ public class CoordinatorService {
     }
 
     @Bean(destroyMethod = "stop", initMethod = "start")
-    public Health health() {
+    public Health health(KubernetesServiceChooseFilter kubernetesServiceChooseFilter) {
+        System.out.println(kubernetesServiceChooseFilter);
         return new Health();
     }
 

@@ -24,9 +24,10 @@ spec:
           configMap:
             name: apisix
             defaultMode: 420
-        - name: socket-runner
-          persistentVolumeClaim:
-            claimName: apisix-socket-file
+        - name: apisix-socket
+          emptyDir:
+            medium: Memory
+            sizeLimit: 128Mi
       initContainers:
         - name: wait-etcd
           image: busybox:1.28
@@ -58,8 +59,8 @@ spec:
             - name: apisix-config
               mountPath: /usr/local/apisix/conf/config.yaml
               subPath: config.yaml
-            - name: socket-runner
-              mountPath: /tmp/apisix
+            - name: apisix-socket
+              mountPath: /dev/shm
           readinessProbe:
             tcpSocket:
               port: 9080
@@ -494,7 +495,7 @@ data:
 
     ext-plugin:
       #cmd: ["ls", "-l"]
-      path_for_test: "/tmp/apisix/apisix.sock"
+      path_for_test: "/dev/shm/apisix.sock"
     
     plugins:                          # plugin list (sorted by priority)
       - real-ip                        # priority: 23000

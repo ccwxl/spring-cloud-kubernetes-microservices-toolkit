@@ -1,43 +1,54 @@
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: wxl-spring-cloud-k8s
-  name: coordinator
-  labels:
-    app: coordinator
-spec:
-  type: ClusterIP
-  clusterIP: None
-  ports:
-    - port: 8080
-      name: server
-      targetPort: 8080
-  selector:
-    app: coordinator
-
----
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
-  labels:
-    app: coordinator
-  name: coordinator
+  name: apisix
   namespace: wxl-spring-cloud-k8s
+  labels:
+    app.kubernetes.io/instance: apisix
+    app.kubernetes.io/name: apisix
+    app.kubernetes.io/version: 2.15.0
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: coordinator
+      app.kubernetes.io/instance: apisix
+      app.kubernetes.io/name: apisix
   template:
     metadata:
       labels:
-        app: coordinator
+        app.kubernetes.io/instance: apisix
+        app.kubernetes.io/name: apisix
     spec:
-
+      volumes:
+        - name: apisix-config
+          configMap:
+            name: apisix
+            defaultMode: 420
+        - name: jar-volume
+          emptyDir: { }
+        - name: coordinator-class-cache
+          hostPath:
+            path: /tmp/coordinator-class-cache
+            type: DirectoryOrCreate
+        - name: apisix-socket
+          emptyDir:
+            medium: Memory
+            sizeLimit: 128Mi
       initContainers:
+        - name: wait-etcd
+          image: busybox:1.28
+          command:
+            - sh
+            - '-c'
+            - >-
+              until nc -z etcd.wxl-spring-cloud-k8s.svc.cluster.local 2379; do echo
+              waiting for etcd `date`; sleep 2; done;
+          resources: { }
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
         - name: nvriot-biz-coordinator
-          image: app:latest
+          image: 221.214.10.82:81/wxl-spring-cloud-k8s/spring-cloud-kubernetes-coordinator:20220928135902
           imagePullPolicy: IfNotPresent
           command:
             - cp
@@ -47,6 +58,43 @@ spec:
             - mountPath: /app
               name: jar-volume
       containers:
+        - name: apisix
+          image: apache/apisix:2.15.0-alpine
+          ports:
+            - name: http
+              containerPort: 9080
+              protocol: TCP
+            - name: tls
+              containerPort: 9443
+              protocol: TCP
+            - name: admin
+              containerPort: 9180
+              protocol: TCP
+          resources: { }
+          volumeMounts:
+            - name: apisix-config
+              mountPath: /usr/local/apisix/conf/config.yaml
+              subPath: config.yaml
+            - name: apisix-socket
+              mountPath: /dev/shm
+          readinessProbe:
+            tcpSocket:
+              port: 9080
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - '-c'
+                  - sleep 30
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
         - image: 221.214.10.82:81/base/ibm-semeru-runtimes:open-17.0.3_7-jdk
           name: coordinator
           resources:
@@ -126,15 +174,18 @@ spec:
               name: jar-volume
             - name: coordinator-class-cache
               mountPath: /class-cache
-            - name: socket-runner
-              mountPath: /tmp/apisix
-      volumes:
-        - name: jar-volume
-          emptyDir: { }
-        - name: coordinator-class-cache
-          hostPath:
-            path: /tmp/coordinator-class-cache
-            type: DirectoryOrCreate
-        - name: socket-runner
-          persistentVolumeClaim:
-            claimName: apisix-socket-file
+            - name: apisix-socket
+              mountPath: /dev/shm
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: { }
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
