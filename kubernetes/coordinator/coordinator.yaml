@@ -43,7 +43,6 @@ spec:
             - >-
               until nc -z etcd.wxl-spring-cloud-k8s.svc.cluster.local 2379; do echo
               waiting for etcd `date`; sleep 2; done;
-          resources: { }
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: IfNotPresent
@@ -98,7 +97,7 @@ spec:
           name: coordinator
           resources:
             limits:
-              cpu: 1000m
+              cpu: 500m
               memory: 512Mi
             requests:
               cpu: 500m

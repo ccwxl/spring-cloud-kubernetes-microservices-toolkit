@@ -699,4 +699,4 @@ spec:
     app.kubernetes.io/name: apisix
   type: NodePort
   sessionAffinity: None
-  externalTrafficPolicy: Local
+  externalTrafficPolicy: Local #需要获取client ip ,所以得是Local, 另外pod只能固定到一个node上.
