@@ -23,7 +23,7 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
     @Override
     public void filter(HttpRequest request, HttpResponse response, PluginFilterChain chain) {
         System.out.println("进入了插件!");
-        request.setHeader("KubernetesServiceChooseFilter", "true");
+        response.setHeader("KubernetesServiceChooseFilter", "true");
         chain.filter(request, response);
     }
 }
