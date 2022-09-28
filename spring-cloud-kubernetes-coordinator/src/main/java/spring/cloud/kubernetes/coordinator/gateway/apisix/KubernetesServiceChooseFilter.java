@@ -24,7 +24,7 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
         //选一个合适的upstream
 
         //放入到header中 x-apisix-original-dst-host
-
+        System.out.println("进入到插件.");
         //识别当前是代理请求吗?
         request.getUpstreamHeaders().put("spring-cloud-kubernetes-coordinator", "true");
         chain.postFilter(request, response);
