@@ -84,6 +84,7 @@ spec:
       dnsPolicy: ClusterFirst
       securityContext: { }
       schedulerName: default-scheduler
+      nodeName: k8s-node06-8-218
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -698,4 +699,4 @@ spec:
     app.kubernetes.io/name: apisix
   type: NodePort
   sessionAffinity: None
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
