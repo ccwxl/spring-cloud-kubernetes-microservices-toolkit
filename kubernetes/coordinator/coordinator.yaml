@@ -179,7 +179,7 @@ spec:
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
       schedulerName: default-scheduler
-#      nodeName: k8s-node06-8-218
+      nodeName: k8s-node01
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
 
