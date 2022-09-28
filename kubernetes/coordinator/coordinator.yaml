@@ -59,6 +59,13 @@ spec:
       containers:
         - name: apisix
           image: apache/apisix:2.15.0-alpine
+          resources:
+            limits:
+              cpu: 100m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 512Mi
           ports:
             - name: http
               containerPort: 9080
@@ -97,10 +104,10 @@ spec:
           name: coordinator
           resources:
             limits:
-              cpu: 500m
+              cpu: 200m
               memory: 512Mi
             requests:
-              cpu: 500m
+              cpu: 100m
               memory: 512Mi
           command:
             - "java"
