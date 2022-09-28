@@ -70,7 +70,6 @@ spec:
             - name: admin
               containerPort: 9180
               protocol: TCP
-          resources: { }
           volumeMounts:
             - name: apisix-config
               mountPath: /usr/local/apisix/conf/config.yaml
@@ -80,7 +79,7 @@ spec:
           readinessProbe:
             tcpSocket:
               port: 9080
-            initialDelaySeconds: 10
+            initialDelaySeconds: 3
             timeoutSeconds: 1
             periodSeconds: 10
             successThreshold: 1
@@ -163,6 +162,24 @@ spec:
             - "-Dnetworkaddress.cache.ttl=10"
             - "-jar"
             - "/app/spring-cloud-kubernetes-coordinator-0.0.1.jar"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 20
+            timeoutSeconds: 2
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: //health
+              port: 80
+            initialDelaySeconds: 25
+            timeoutSeconds: 2
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
           env:
             - name: LANG
               value: "zh_CN.UTF-8"
@@ -180,13 +197,7 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
-      securityContext: { }
       schedulerName: default-scheduler
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
 

@@ -1,4 +1,4 @@
-package spring.cloud.kubernetes.coordinator;
+package spring.cloud.kubernetes.coordinator.config;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -11,13 +11,11 @@ import com.sun.net.httpserver.HttpServer;
  * @author wxl
  */
 public class Health {
-
     private static final int OK = 200;
-    private static final int ERROR = 500;
 
     private HttpServer server;
 
-    Health() {
+    public Health() {
     }
 
     void start() {
@@ -27,7 +25,7 @@ public class Health {
             throw new RuntimeException("Could not setup http server: ", ioe);
         }
         server.createContext("/health", exchange -> {
-            exchange.sendResponseHeaders(200, 0);
+            exchange.sendResponseHeaders(OK, 0);
             exchange.close();
         });
         server.start();

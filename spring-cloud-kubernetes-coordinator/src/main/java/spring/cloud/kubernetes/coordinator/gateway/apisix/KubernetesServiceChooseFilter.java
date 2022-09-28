@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author wxl
+ * 负载均衡.
  */
 @Component
 public class KubernetesServiceChooseFilter implements PluginFilter {
@@ -18,7 +19,6 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
     public String name() {
         return "KubernetesServiceChooseFilter";
     }
-
 
     @Override
     public void filter(HttpRequest request, HttpResponse response, PluginFilterChain chain) {
