@@ -14,6 +14,7 @@ import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalanc
 import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.stereotype.Component;
+import spring.cloud.kubernetes.loadbalancer.Cons;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
 import java.util.Set;
@@ -60,14 +61,13 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
         String sourceIp = request.getSourceIP();
         log.info("Req client Ip: [{}]", sourceIp);
         LoadbalancerContextHolder.setLoadbalancerIp(sourceIp);
-
         Set<LoadBalancerLifecycle> supportedLifecycleProcessors = getSupportedLifecycleProcessors(pluginConfig.getService());
         supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(ReactiveLoadBalancer.REQUEST));
         ServiceInstance serviceInstance = blockingLoadBalancerClient.choose(pluginConfig.getService(), ReactiveLoadBalancer.REQUEST);
-
-        log.info("Config is: [{}]", serviceInstance);
+        log.info("choose serviceInstance is: [{}]", serviceInstance.getInstanceId() + ":" + serviceInstance.getHost() + ":" + serviceInstance.getPort());
         response.setHeader("Kubernetes-Service-Choose-Filter-Cost-Ms", System.currentTimeMillis() - startTime + "ms");
         response.setHeader("Kubernetes-Service-Choose-Service", serviceInstance.toString());
+        response.setHeader(Cons.LB_IP, serviceInstance.getHost() + ":" + serviceInstance.getPort());
     }
 
     @Nullable

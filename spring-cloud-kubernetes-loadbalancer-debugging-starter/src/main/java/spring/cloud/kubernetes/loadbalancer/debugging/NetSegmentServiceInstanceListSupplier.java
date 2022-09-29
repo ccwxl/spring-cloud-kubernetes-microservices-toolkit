@@ -8,6 +8,7 @@ import org.springframework.cloud.commons.util.InetUtilsProperties;
 import org.springframework.cloud.loadbalancer.core.DelegatingServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
@@ -34,21 +35,42 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
     }
 
     private List<ServiceInstance> filterByNetSegment(List<ServiceInstance> instances) {
-        InetAddress host = inetUtils.findFirstNonLoopbackAddress();
+        InetAddress host = null;
+        String loadbalancerIp = LoadbalancerContextHolder.getLoadbalancerIp();
+        log.info("NetSegmentServiceInstanceListSupplier Ip :[{}]", loadbalancerIp);
+        try {
+            if (StringUtils.hasText(loadbalancerIp)) {
+                host = InetAddress.getByName(loadbalancerIp);
+            } else {
+                host = inetUtils.findFirstNonLoopbackAddress();
+            }
+        } catch (Exception e) {
+            log.warn("InetAddress.getByName form [{}] failed.", loadbalancerIp);
+        }
         if (host == null) {
             return instances;
         }
         String resourceIp = host.getHostAddress();
         List<ServiceInstance> targetList = new ArrayList<>();
+        List<ServiceInstance> publicPodService = new ArrayList<>();
         for (ServiceInstance instance : instances) {
             if (IPV4Util.isSameAddress(resourceIp, instance.getHost())) {
                 targetList.add(instance);
             }
+            //过滤出公共服务
+            if (isPublicPodService(instance)) {
+                publicPodService.add(instance);
+            }
         }
-        log.info("NetSegmentServiceInstanceListSupplier :[{}]", LoadbalancerContextHolder.getLoadbalancerIp());
         if (CollectionUtils.isEmpty(targetList)) {
             return instances;
         }
-        return targetList;
+        //如果本地没有任何服务. 那么只去请求k8s的pod. 不要去请求其他开发者的本地服务. 以免出现混乱. 将 instance public-service=true 的过滤出来.
+        return publicPodService;
+    }
+
+    private boolean isPublicPodService(ServiceInstance instance) {
+        String pubSvc = instance.getMetadata().getOrDefault("public-service", "false");
+        return Boolean.parseBoolean(pubSvc);
     }
 }
