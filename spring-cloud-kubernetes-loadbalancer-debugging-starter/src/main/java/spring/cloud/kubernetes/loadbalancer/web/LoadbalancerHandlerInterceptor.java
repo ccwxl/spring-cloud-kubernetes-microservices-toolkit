@@ -24,7 +24,7 @@ public class LoadbalancerHandlerInterceptor implements HandlerInterceptor {
         if (log.isDebugEnabled()) {
             log.debug("lbIp is :[{}]", lbIp);
         }
-        if (StringUtils.isBlank(lbIp)) {
+        if (StringUtils.isNotBlank(lbIp)) {
             LoadbalancerContextHolder.setLoadbalancerIp(lbIp);
         }
         return true;

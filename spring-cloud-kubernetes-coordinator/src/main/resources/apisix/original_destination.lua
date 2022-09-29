@@ -1,4 +1,4 @@
-local core        = require("apisix.core")
+local core  = require("apisix.core")
 local nkeys = core.table.nkeys
 local pairs = pairs
 
