@@ -58,7 +58,8 @@ function _M.new(up_nodes, upstream)
                             return nil, "all upstream servers tried"
             end
             local svc_key = fetch_chash_hash_key(ctx, upstream)
-            return servers[svc_key]
+--             return servers[svc_key]
+            return svc_key
         end,
         after_balance = function (ctx, before_retry)
             if not before_retry then

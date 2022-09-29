@@ -7,14 +7,10 @@ import org.apache.apisix.plugin.runner.filter.PluginFilterChain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.commons.util.InetUtils;
-import org.springframework.cloud.commons.util.InetUtilsProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Map;
 
