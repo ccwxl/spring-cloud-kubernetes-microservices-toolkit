@@ -1,5 +1,6 @@
 package spring.cloud.kubernetes.loadbalancer.debugging;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.commons.util.InetUtils;
@@ -14,11 +15,13 @@ import org.springframework.core.env.Environment;
  * @author wxl
  * 自定义负载均衡和服务实例列表
  */
+@Slf4j
 public class LoadBalanceConfig {
 
     @Bean
     public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment, LoadBalancerClientFactory loadBalancerClientFactory) {
         String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+        log.info("init NetSegmentLoadBalancer.");
         return new NetSegmentLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name);
     }
 
@@ -26,6 +29,7 @@ public class LoadBalanceConfig {
     public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
             ConfigurableApplicationContext context, ObjectProvider<InetUtils> inetUtils) {
         ServiceInstanceListSupplier supplier = ServiceInstanceListSupplier.builder().withBlockingDiscoveryClient().build(context);
+        log.info("init NetSegmentServiceInstanceListSupplier.");
         return new NetSegmentServiceInstanceListSupplier(supplier, inetUtils);
     }
 }

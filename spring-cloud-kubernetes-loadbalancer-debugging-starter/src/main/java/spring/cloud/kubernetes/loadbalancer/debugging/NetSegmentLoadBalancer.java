@@ -1,5 +1,6 @@
 package spring.cloud.kubernetes.loadbalancer.debugging;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -59,7 +60,7 @@ public class NetSegmentLoadBalancer implements ReactorServiceInstanceLoadBalance
 
     private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> instances) {
         //如果是通过代理过来的请求. 确定只去请求k8s的pod. 不要去请求开发者的本地服务.
-        System.out.println("NetSegmentLoadBalancer Apply Ip: " + LoadbalancerContextHolder.getLoadbalancerIp());
+        log.info("NetSegmentLoadBalancer Apply Ip: " + LoadbalancerContextHolder.getLoadbalancerIp());
         //什么时候去请求代理服务器.
         //1. 本地无目标服务
         if (instances.isEmpty()) {

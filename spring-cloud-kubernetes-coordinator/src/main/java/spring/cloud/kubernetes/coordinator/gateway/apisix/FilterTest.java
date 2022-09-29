@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Map;
 
@@ -29,6 +31,9 @@ public class FilterTest implements CommandLineRunner {
         httpRequest.initCtx(httpResponse, Map.of(kubernetesServiceChooseFilter.name(), """
                 {"namespace":"wxl-k8s-service","service":"account"}
                 """));
+        Field sourceIP = HttpRequest.class.getDeclaredField("sourceIP");
+        ReflectionUtils.makeAccessible(sourceIP);
+        ReflectionUtils.setField(sourceIP, httpRequest, "127.0.0.1");
         PluginFilterChain filterChain = new PluginFilterChain(Collections.singletonList(kubernetesServiceChooseFilter));
         filterChain.filter(httpRequest, httpResponse);
     }

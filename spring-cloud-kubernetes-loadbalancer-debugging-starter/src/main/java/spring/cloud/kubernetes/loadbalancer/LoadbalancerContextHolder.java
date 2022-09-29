@@ -8,7 +8,7 @@ import org.springframework.core.NamedInheritableThreadLocal;
  */
 public class LoadbalancerContextHolder {
     private static final ThreadLocal<String> LOADBALANCER_CONTEXT_HOLDER =
-            new NamedInheritableThreadLocal<>("LoadbalancerContex");
+            new NamedInheritableThreadLocal<>("LoadbalancerContext");
 
     public static String getLoadbalancerIp() {
 

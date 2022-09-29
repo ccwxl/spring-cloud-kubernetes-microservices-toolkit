@@ -9,6 +9,7 @@ import org.springframework.cloud.loadbalancer.core.DelegatingServiceInstanceList
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Flux;
+import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
                 targetList.add(instance);
             }
         }
+        log.info("NetSegmentServiceInstanceListSupplier :[{}]", LoadbalancerContextHolder.getLoadbalancerIp());
         if (CollectionUtils.isEmpty(targetList)) {
             return instances;
         }
