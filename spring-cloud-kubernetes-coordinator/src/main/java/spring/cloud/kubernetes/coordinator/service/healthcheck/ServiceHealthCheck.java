@@ -17,7 +17,7 @@ public class ServiceHealthCheck {
     @Autowired
     KubernetesDiscoveryClient discoveryClient;
 
-    @Scheduled(fixedRate = 10, initialDelay = 15, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedRate = 3, initialDelay = 15, timeUnit = TimeUnit.SECONDS)
     public void serviceEndpointCheck() {
 
     }

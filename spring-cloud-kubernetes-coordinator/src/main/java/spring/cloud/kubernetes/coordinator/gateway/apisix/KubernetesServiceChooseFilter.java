@@ -67,7 +67,7 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
         log.info("choose serviceInstance is: [{}]", serviceInstance.getInstanceId() + ":" + serviceInstance.getHost() + ":" + serviceInstance.getPort());
         request.setHeader("Kubernetes-Service-Choose-Filter-Cost-Ms", System.currentTimeMillis() - startTime + "ms");
         request.setHeader("Kubernetes-Service-Choose-Service", serviceInstance.toString());
-        request.setHeader(Cons.LB_IP, serviceInstance.getHost());
+        request.setHeader(Cons.LB_IP, sourceIp);
         request.setHeader(Cons.LB_IP_PORT, serviceInstance.getHost() + ":" + serviceInstance.getPort());
     }
 

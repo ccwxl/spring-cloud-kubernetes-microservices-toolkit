@@ -22,8 +22,6 @@ public class LoginController {
     @GetMapping("/login")
     public String login() {
         uaaFeignClient.passport("aa");
-        log.info("");
         return "ok";
     }
-
 }
