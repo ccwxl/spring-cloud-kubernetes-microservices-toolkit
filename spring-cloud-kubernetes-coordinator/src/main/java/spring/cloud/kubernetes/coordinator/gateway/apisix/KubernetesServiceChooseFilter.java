@@ -65,9 +65,8 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
         supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(ReactiveLoadBalancer.REQUEST));
         ServiceInstance serviceInstance = blockingLoadBalancerClient.choose(pluginConfig.getService(), ReactiveLoadBalancer.REQUEST);
         log.info("choose serviceInstance is: [{}]", serviceInstance.getInstanceId() + ":" + serviceInstance.getHost() + ":" + serviceInstance.getPort());
-//        response.setHeader("Kubernetes-Service-Choose-Filter-Cost-Ms", System.currentTimeMillis() - startTime + "ms");
-//        response.setHeader("Kubernetes-Service-Choose-Service", serviceInstance.toString());
-//        response.setHeader(Cons.LB_IP, serviceInstance.getHost() + ":" + serviceInstance.getPort());
+        request.setHeader("Kubernetes-Service-Choose-Filter-Cost-Ms", System.currentTimeMillis() - startTime + "ms");
+        request.setHeader("Kubernetes-Service-Choose-Service", serviceInstance.toString());
         request.setHeader(Cons.LB_IP, serviceInstance.getHost() + ":" + serviceInstance.getPort());
     }
 
