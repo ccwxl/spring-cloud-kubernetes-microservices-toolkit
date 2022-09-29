@@ -34,6 +34,10 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: 128Mi
+        - name: apisix-plugin-config
+          configMap:
+            name: apisix-plugin
+            defaultMode: 420
       initContainers:
         - name: wait-etcd
           image: busybox:1.28
@@ -75,6 +79,9 @@ spec:
               subPath: config.yaml
             - name: apisix-socket
               mountPath: /dev/shm
+            - name: apisix-plugin-config
+              mountPath: /usr/local/apisix/apisix/balancer/original_destination.lua
+              subPath: original_destination.lua
           readinessProbe:
             tcpSocket:
               port: 9080
