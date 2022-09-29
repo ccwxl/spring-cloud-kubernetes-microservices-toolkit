@@ -21,7 +21,10 @@ configurations {
 
 dependencies {
     implementation(project(":spring-cloud-kubernetes-loadbalancer-debugging-starter"))
-    implementation 'org.apache.apisix:apisix-runner-core:0.3.0'
+    implementation('org.apache.apisix:apisix-runner-core:0.3.0') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-log4j2'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
     implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-discovery'
     implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-loadbalancer'
     implementation DependencyLibrary.SNAKEYAML

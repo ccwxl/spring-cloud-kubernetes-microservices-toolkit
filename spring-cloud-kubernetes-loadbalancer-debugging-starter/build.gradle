@@ -18,8 +18,11 @@ configurations {
 }
 
 dependencies {
-    compileOnly group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-discovery'
-    compileOnly group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-loadbalancer'
+    compileOnly 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    compileOnly 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-discovery'
+    compileOnly 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-loadbalancer'
     compileOnly DependencyLibrary.SNAKEYAML
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }

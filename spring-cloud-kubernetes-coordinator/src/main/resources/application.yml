@@ -1,3 +1,7 @@
+spring:
+  main:
+    web-application-type: NONE
+
 cache.config:
   expired: ${APISIX_CONF_EXPIRE_TIME:10000}
   capacity: 1000
