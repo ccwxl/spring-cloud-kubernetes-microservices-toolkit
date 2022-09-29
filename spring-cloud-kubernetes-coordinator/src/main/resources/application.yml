@@ -37,7 +37,7 @@ socket:
   file: ${APISIX_LISTEN_ADDRESS:/opt/apisix/apisix.sock}
 
 filter:
-  enabled: false
+  enabled: true
 
 logging:
   level:
