@@ -42,6 +42,7 @@ public class KubernetesAutoServiceRegistration extends AbstractAutoServiceRegist
         registration.setServiceId(getAppName(properties, getContext().getEnvironment()) + "." + getNamespace(getContext().getEnvironment()));
         registration.getMetadata().put("namespace", getNamespace(getContext().getEnvironment()));
         registration.getMetadata().put("name", getAppName(properties, getContext().getEnvironment()));
+        registration.getMetadata().put("public-service", "false");
     }
 
     @Override

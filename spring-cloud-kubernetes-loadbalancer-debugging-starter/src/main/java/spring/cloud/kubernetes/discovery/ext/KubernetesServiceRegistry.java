@@ -9,6 +9,7 @@ import org.springframework.cloud.client.serviceregistry.ServiceRegistry;
 import org.springframework.cloud.kubernetes.commons.discovery.KubernetesDiscoveryProperties;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author wxl
@@ -60,13 +61,28 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
             LOG.info("New endpoint: {}", e);
         } else {
             try {
-                EndpointAddress endpointAddress = new EndpointAddressBuilder().withIp(registration.getHost()).build();
-                EndpointPort endpointPort = new EndpointPortBuilder().withPort(registration.getPort()).build();
-                EndpointSubset endpointSubset = new EndpointSubsetBuilder().addToAddresses(endpointAddress).addToPorts(endpointPort).build();
-                endpoints.getSubsets()
-                        .add(endpointSubset);
-                Endpoints patch = resource.patch(endpoints);
-                LOG.info("Endpoint updated: {}", patch);
+                boolean isExist = false;
+                Endpoints endpoints1 = resource.get();
+                List<EndpointSubset> subsets = endpoints1.getSubsets();
+                for (EndpointSubset es : subsets) {
+                    List<EndpointAddress> addresses = es.getAddresses();
+                    for (EndpointAddress ea : addresses) {
+                        if (ea.getIp().equals(registration.getHost())) {
+                            isExist = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!isExist) {
+                    //如果存在则不去patch
+                    EndpointAddress endpointAddress = new EndpointAddressBuilder().withIp(registration.getHost()).build();
+                    EndpointPort endpointPort = new EndpointPortBuilder().withPort(registration.getPort()).build();
+                    EndpointSubset endpointSubset = new EndpointSubsetBuilder().addToAddresses(endpointAddress).addToPorts(endpointPort).build();
+                    endpoints.getSubsets().add(endpointSubset);
+                    Endpoints patch = resource.patch(endpoints);
+                    LOG.info("Endpoint updated: {}", patch);
+                }
             } catch (RuntimeException e) {
                 LOG.warn("Endpoint updated failed:", e);
             }

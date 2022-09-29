@@ -64,14 +64,16 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
         }
         if (CollectionUtils.isEmpty(targetList)) {
             //如果本地没有任何服务. 那么只去请求k8s的pod. 不要去请求其他开发者的本地服务. 以免出现混乱. 将 instance public-service=true 的过滤出来.
+            log.info("Selected Pub services are: [{}]", publicPodService);
             return publicPodService;
         } else {
+            log.info("Selected services are: [{}]", targetList);
             return targetList;
         }
     }
 
     private boolean isPublicPodService(ServiceInstance instance) {
-        String pubSvc = instance.getMetadata().getOrDefault("public-service", "false");
+        String pubSvc = instance.getMetadata().getOrDefault("public-service", "true");
         return Boolean.parseBoolean(pubSvc);
     }
 }
