@@ -10,6 +10,7 @@ import org.springframework.cloud.client.loadbalancer.Request;
 import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.*;
 import reactor.core.publisher.Mono;
+import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
 import java.util.List;
 import java.util.Random;
@@ -58,7 +59,7 @@ public class NetSegmentLoadBalancer implements ReactorServiceInstanceLoadBalance
 
     private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> instances) {
         //如果是通过代理过来的请求. 确定只去请求k8s的pod. 不要去请求开发者的本地服务.
-
+        log.info("NetSegmentLoadBalancer Apply Ip: " + LoadbalancerContextHolder.getLoadbalancerIp());
         //什么时候去请求代理服务器.
         //1. 本地无目标服务
         if (instances.isEmpty()) {
