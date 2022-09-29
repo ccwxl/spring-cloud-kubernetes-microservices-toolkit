@@ -9,10 +9,14 @@ import org.apache.apisix.plugin.runner.filter.PluginFilterChain;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.client.loadbalancer.*;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer;
 import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
+import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.stereotype.Component;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
+
+import java.util.Set;
 
 /**
  * @author wxl
@@ -27,6 +31,9 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
 
     @Autowired
     private LoadBalancerClient loadBalancerClient;
+
+    @Autowired
+    private LoadBalancerClientFactory loadBalancerClientFactory;
 
     @Override
     public String name() {
@@ -53,7 +60,11 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
         String sourceIp = request.getSourceIP();
         log.info("Req client Ip: [{}]", sourceIp);
         LoadbalancerContextHolder.setLoadbalancerIp(sourceIp);
-        ServiceInstance serviceInstance = blockingLoadBalancerClient.choose(pluginConfig.getService());
+
+        Set<LoadBalancerLifecycle> supportedLifecycleProcessors = getSupportedLifecycleProcessors(pluginConfig.getService());
+        supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(ReactiveLoadBalancer.REQUEST));
+        ServiceInstance serviceInstance = blockingLoadBalancerClient.choose(pluginConfig.getService(), ReactiveLoadBalancer.REQUEST);
+
         log.info("Config is: [{}]", serviceInstance);
         response.setHeader("Kubernetes-Service-Choose-Filter-Cost-Ms", System.currentTimeMillis() - startTime + "ms");
         response.setHeader("Kubernetes-Service-Choose-Service", serviceInstance.toString());
@@ -69,5 +80,11 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
             log.error("Serialization configuration failed.", e);
         }
         return pluginConfig;
+    }
+
+    private Set<LoadBalancerLifecycle> getSupportedLifecycleProcessors(String serviceId) {
+        return LoadBalancerLifecycleValidator.getSupportedLifecycleProcessors(
+                loadBalancerClientFactory.getInstances(serviceId, LoadBalancerLifecycle.class),
+                DefaultRequestContext.class, Object.class, ServiceInstance.class);
     }
 }

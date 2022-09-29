@@ -97,7 +97,7 @@ spec:
           name: coordinator
           resources:
             limits:
-              cpu: 500m
+              cpu: 800m
               memory: 512Mi
             requests:
               cpu: 100m
