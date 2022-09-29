@@ -63,10 +63,11 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
             }
         }
         if (CollectionUtils.isEmpty(targetList)) {
-            return instances;
+            //如果本地没有任何服务. 那么只去请求k8s的pod. 不要去请求其他开发者的本地服务. 以免出现混乱. 将 instance public-service=true 的过滤出来.
+            return publicPodService;
+        } else {
+            return targetList;
         }
-        //如果本地没有任何服务. 那么只去请求k8s的pod. 不要去请求其他开发者的本地服务. 以免出现混乱. 将 instance public-service=true 的过滤出来.
-        return publicPodService;
     }
 
     private boolean isPublicPodService(ServiceInstance instance) {
