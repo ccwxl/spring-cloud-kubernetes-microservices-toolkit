@@ -1,4 +1,5 @@
 local core        = require("apisix.core")
+local nkeys = core.table.nkeys
 local pairs = pairs
 
 local _M = {}
