@@ -18,7 +18,7 @@ import java.util.Map;
  * @author wxl
  */
 @Component
-@ConditionalOnProperty(value = "filter.enabled", havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(value = "filter.test.enabled", havingValue = "true", matchIfMissing = false)
 public class FilterTest implements CommandLineRunner {
 
     @Autowired

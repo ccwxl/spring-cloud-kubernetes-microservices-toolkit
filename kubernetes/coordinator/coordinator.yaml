@@ -154,6 +154,7 @@ spec:
             - "java.base/jdk.internal.misc=ALL-UNNAMED"
             - "-Dserver.port=8080"
             - "-Dspring.profiles.active=test"
+            - "-Dfilter.test.enabled=false"
             - "-Duser.timezone=GMT+08"
             - "-Dfile.encoding=UTF-8"
             - "-Djava.security.egd=file:/dev/./urandom"
