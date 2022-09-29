@@ -3,6 +3,8 @@ spring:
     name: coordinator
   main:
     web-application-type: NONE
+  profiles:
+    active: test
   cloud:
     kubernetes:
       enabled: true #开启kubernetes
