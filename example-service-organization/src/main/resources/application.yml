@@ -35,7 +35,7 @@ spring:
     discovery:
       enabled: true
     loadbalancer:
-      enable: true
+      enabled: true
 
 server:
   port: 9003

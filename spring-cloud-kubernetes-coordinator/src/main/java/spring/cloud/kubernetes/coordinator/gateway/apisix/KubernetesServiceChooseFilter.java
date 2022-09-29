@@ -8,6 +8,9 @@ import org.apache.apisix.plugin.runner.filter.PluginFilter;
 import org.apache.apisix.plugin.runner.filter.PluginFilterChain;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
 import org.springframework.stereotype.Component;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
@@ -22,6 +25,9 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
+
     @Override
     public String name() {
 
@@ -30,19 +36,27 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
 
     @Override
     public void filter(HttpRequest request, HttpResponse response, PluginFilterChain chain) {
+        if (loadBalancerClient instanceof BlockingLoadBalancerClient blockingLoadBalancerClient) {
+            doServiceChoose(blockingLoadBalancerClient, request, response);
+            chain.filter(request, response);
+        } else {
+            chain.filter(request, response);
+        }
+    }
+
+    private void doServiceChoose(BlockingLoadBalancerClient blockingLoadBalancerClient, HttpRequest request, HttpResponse response) {
         long startTime = System.currentTimeMillis();
         PluginConfig pluginConfig = getPluginConfig(request);
         if (pluginConfig == null) {
-            chain.filter(request, response);
             return;
         }
         String sourceIp = request.getSourceIP();
         log.info("Req client Ip: [{}]", sourceIp);
         LoadbalancerContextHolder.setLoadbalancerIp(sourceIp);
-
-        log.info("Config is: [{}]", pluginConfig);
+        ServiceInstance serviceInstance = blockingLoadBalancerClient.choose(pluginConfig.getService());
+        log.info("Config is: [{}]", serviceInstance);
         response.setHeader("Kubernetes-Service-Choose-Filter-Cost-Ms", System.currentTimeMillis() - startTime + "ms");
-        chain.filter(request, response);
+        response.setHeader("Kubernetes-Service-Choose-Service", serviceInstance.toString());
     }
 
     @Nullable
