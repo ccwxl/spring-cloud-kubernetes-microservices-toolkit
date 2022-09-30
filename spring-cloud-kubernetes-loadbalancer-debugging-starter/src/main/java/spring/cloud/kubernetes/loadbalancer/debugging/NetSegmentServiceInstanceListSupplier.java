@@ -55,6 +55,7 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
         List<ServiceInstance> publicPodService = new ArrayList<>();
         for (ServiceInstance instance : instances) {
             if (IPV4Util.isSameAddress(resourceIp, instance.getHost())) {
+                //排除不健康的instance. TODO
                 targetList.add(instance);
             }
             //过滤出公共服务
@@ -62,11 +63,9 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
                 publicPodService.add(instance);
             }
         }
-        //如何区分当前需要请求代理. 如果是本地服务. 就要去请求代理服务.
-
 
         if (CollectionUtils.isEmpty(targetList)) {
-            //如果本地没有任何服务. 那么只去请求k8s的pod. 不要去请求其他开发者的本地服务. 以免出现混乱. 将 instance public-service=true 的过滤出来.
+            //如果本地没有任何服务. 那么只去请求k8s的pod. 不要去请求其他开发者的本地服务. 以免出现混乱. 将 instance public-service=true 的过滤出来. 仅适用于k8s内pod的路由方式
             log.info("Selected Pub services are: [{}]", publicPodService);
             return publicPodService;
         } else {

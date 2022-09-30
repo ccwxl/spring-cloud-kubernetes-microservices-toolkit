@@ -1,19 +1,13 @@
 package spring.cloud.kubernetes.discovery.ext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.SmartApplicationListener;
-
-import java.net.UnknownHostException;
 
 /**
  * @author wxl
  */
 public class KubernetesAutoServiceRegistrationListener implements SmartApplicationListener {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(KubernetesAutoServiceRegistrationListener.class);
 
     private final KubernetesAutoServiceRegistration autoServiceRegistration;
 
@@ -39,13 +33,7 @@ public class KubernetesAutoServiceRegistrationListener implements SmartApplicati
     @Override
     public void onApplicationEvent(ApplicationEvent applicationEvent) {
         if (applicationEvent instanceof WebServerInitializedEvent) {
-            WebServerInitializedEvent event = (WebServerInitializedEvent) applicationEvent;
-            try {
-                autoServiceRegistration.setRegistration(event.getWebServer().getPort());
-                autoServiceRegistration.start();
-            } catch (UnknownHostException e) {
-                LOGGER.error("Error registering to kubernetes", e);
-            }
+            autoServiceRegistration.start();
         }
     }
 
