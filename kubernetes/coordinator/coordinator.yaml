@@ -80,7 +80,7 @@ spec:
             - name: apisix-socket
               mountPath: /dev/shm
             - name: apisix-plugin-config
-              mountPath: /usr/local/apisix/apisix/balancer/original_destination.lua
+              mountPath: /usr/local/apisix/apisix/balancer/chash.lua
               subPath: original_destination.lua
           readinessProbe:
             tcpSocket:

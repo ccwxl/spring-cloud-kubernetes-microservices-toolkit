@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * @author wxl
+ * KubernetesServiceInstance
  */
 public class KubernetesRegistration implements Registration {
 

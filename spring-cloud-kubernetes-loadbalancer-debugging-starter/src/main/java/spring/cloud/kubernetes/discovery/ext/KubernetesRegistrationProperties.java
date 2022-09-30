@@ -1,12 +1,13 @@
 package spring.cloud.kubernetes.discovery.ext;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.kubernetes.commons.discovery.KubernetesServiceInstance;
 
 /**
  * @author wxl
  */
 @ConfigurationProperties("spring.cloud.kubernetes.discovery")
-public class KubernetesRegistrationProperties {
+public class KubernetesRegistrationProperties extends KubernetesServiceInstance {
 
     /**
      * Used only for external app - IP address to use when accessing service (must also set preferIpAddress to use).
@@ -57,7 +58,7 @@ public class KubernetesRegistrationProperties {
         this.preferIpAddress = preferIpAddress;
     }
 
-    public Integer getPort() {
+    public int getPort() {
         return port;
     }
 
