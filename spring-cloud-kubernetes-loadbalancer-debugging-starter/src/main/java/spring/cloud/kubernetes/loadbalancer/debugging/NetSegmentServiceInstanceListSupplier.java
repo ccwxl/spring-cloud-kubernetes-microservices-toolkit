@@ -55,11 +55,11 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
         List<ServiceInstance> publicPodService = new ArrayList<>();
         for (ServiceInstance instance : instances) {
             if (IPV4Util.isSameAddress(resourceIp, instance.getHost())) {
-                //如何排除不健康的instance
                 targetList.add(instance);
             }
             //过滤出公共服务
             if (isPublicPodService(instance)) {
+                instance.getMetadata().put("k8s-public-service", "true");
                 publicPodService.add(instance);
             }
         }
@@ -75,7 +75,6 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
     }
 
     private boolean isPublicPodService(ServiceInstance instance) {
-        String pubSvc = instance.getMetadata().getOrDefault("public-service", "true");
-        return Boolean.parseBoolean(pubSvc);
+        return instance.getHost().startsWith("10.244");
     }
 }

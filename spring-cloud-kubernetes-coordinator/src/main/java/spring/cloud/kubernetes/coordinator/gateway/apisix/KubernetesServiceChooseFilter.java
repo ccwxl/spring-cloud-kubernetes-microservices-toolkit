@@ -45,6 +45,9 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
 
     @Override
     public void filter(HttpRequest request, HttpResponse response, PluginFilterChain chain) {
+        log.info("current request arg :[{}]", request.getArgs());
+        log.info("current request path :[{}]", request.getPath());
+        log.info("current request getArg :[{}]", request.getArg(Cons.LB_IP_PORT_PARAM));
         if (loadBalancerClient instanceof BlockingLoadBalancerClient blockingLoadBalancerClient) {
             doServiceChoose(blockingLoadBalancerClient, request);
         }

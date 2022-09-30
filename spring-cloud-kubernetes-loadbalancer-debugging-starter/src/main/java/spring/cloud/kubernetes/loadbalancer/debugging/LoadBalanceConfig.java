@@ -1,10 +1,12 @@
 package spring.cloud.kubernetes.loadbalancer.debugging;
 
+import io.fabric8.kubernetes.api.model.Pod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.commons.util.InetUtils;
+import org.springframework.cloud.kubernetes.commons.PodUtils;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
@@ -12,6 +14,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
+import spring.cloud.kubernetes.discovery.ext.KubernetesRegistration;
 
 import java.time.Duration;
 
@@ -23,10 +26,12 @@ import java.time.Duration;
 public class LoadBalanceConfig {
 
     @Bean
-    public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment, LoadBalancerClientFactory loadBalancerClientFactory) {
+    public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment, LoadBalancerClientFactory loadBalancerClientFactory,
+                                                                                   PodUtils<Pod> podUtils, ProxyProperties proxyProperties) {
         String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
         log.info("init NetSegmentLoadBalancer.");
-        return new NetSegmentLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name);
+        return new NetSegmentLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name,
+                environment.getProperty("spring.cloud.kubernetes.discovery.register", "false"), podUtils, proxyProperties);
     }
 
     @Bean

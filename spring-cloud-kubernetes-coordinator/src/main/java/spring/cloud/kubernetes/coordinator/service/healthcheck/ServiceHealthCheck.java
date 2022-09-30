@@ -1,5 +1,6 @@
 package spring.cloud.kubernetes.coordinator.service.healthcheck;
 
+import io.fabric8.kubernetes.client.KubernetesClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.kubernetes.fabric8.discovery.KubernetesDiscoveryClient;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,6 +17,9 @@ public class ServiceHealthCheck {
 
     @Autowired
     KubernetesDiscoveryClient discoveryClient;
+
+    @Autowired
+    private KubernetesClient client;
 
     @Scheduled(fixedRate = 3, initialDelay = 15, timeUnit = TimeUnit.SECONDS)
     public void serviceEndpointCheck() {

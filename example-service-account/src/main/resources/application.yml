@@ -38,5 +38,11 @@ spring:
     loadbalancer:
       enabled: true
 
+
+proxy:
+  config:
+    host: 192.168.8.183
+    port: 31684
+
 server:
   port: 9001

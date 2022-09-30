@@ -26,12 +26,6 @@ public class LoadbalancerRestTemplateInterceptor implements ClientHttpRequestInt
             requestWrapper.getHeaders().add(Cons.LB_IP, loadbalancerIp);
         }
 
-        //对代理的支持.写请求头
-        String podService = ProxyContextHolder.getRealPodService();
-        if (StringUtils.hasLength(podService)) {
-            requestWrapper.getHeaders().add(Cons.LB_IP_PORT, podService);
-        }
-
         return clientHttpRequestExecution.execute(requestWrapper, bytes);
     }
 
