@@ -22,6 +22,7 @@ import java.util.Set;
 /**
  * @author wxl
  * 负载均衡.
+ * 在filter中不能对Response 对象修改. 一旦修改就会完全使用插件的response.
  */
 @Slf4j
 @Component
@@ -39,27 +40,25 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
     @Override
     public String name() {
 
-        return "KubernetesServiceChooseFilter";
+        return "KubernetesDiscoveryServiceChooseFilter";
     }
 
     @Override
     public void filter(HttpRequest request, HttpResponse response, PluginFilterChain chain) {
         if (loadBalancerClient instanceof BlockingLoadBalancerClient blockingLoadBalancerClient) {
-            doServiceChoose(blockingLoadBalancerClient, request, response);
-            chain.filter(request, response);
-        } else {
-            chain.filter(request, response);
+            doServiceChoose(blockingLoadBalancerClient, request);
         }
+        chain.filter(request, response);
     }
 
-    private void doServiceChoose(BlockingLoadBalancerClient blockingLoadBalancerClient, HttpRequest request, HttpResponse response) {
+    private void doServiceChoose(BlockingLoadBalancerClient blockingLoadBalancerClient, HttpRequest request) {
         long startTime = System.currentTimeMillis();
         PluginConfig pluginConfig = getPluginConfig(request);
         if (pluginConfig == null) {
             return;
         }
         String sourceIp = request.getSourceIP();
-        log.info("Req client Ip: [{}]", sourceIp);
+        log.info("Req client Ip: [{}] path: [{}]", sourceIp, request.getPath());
         LoadbalancerContextHolder.setLoadbalancerIp(sourceIp);
         Set<LoadBalancerLifecycle> supportedLifecycleProcessors = getSupportedLifecycleProcessors(pluginConfig.getService());
         supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(ReactiveLoadBalancer.REQUEST));
