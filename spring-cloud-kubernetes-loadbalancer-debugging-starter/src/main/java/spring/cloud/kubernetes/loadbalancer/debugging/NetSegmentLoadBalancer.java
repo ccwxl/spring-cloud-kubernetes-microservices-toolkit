@@ -73,7 +73,7 @@ public class NetSegmentLoadBalancer implements ReactorServiceInstanceLoadBalance
 
         //如果是本地服务. 而且只能请求公共服务. 那么就要去请求代理服务. 因为无法直接请求pod. TODO 如何判断. 根据当前注册的元数据判断.
         //要重写URL. 怎么办. 需要在每个框架中独立实现... 或者使用header?
-        ProxyContextHolder.setRealPodService(instance.getInstanceId() + ":" + instance.getPort());
+//        ProxyContextHolder.setRealPodService(instance.getInstanceId() + ":" + instance.getPort());
 
         return new DefaultResponse(instance);
     }

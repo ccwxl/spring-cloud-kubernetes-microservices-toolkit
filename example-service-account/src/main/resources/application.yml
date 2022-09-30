@@ -18,10 +18,11 @@ spring:
           enabled: true
         all-namespaces: false
         # register properties
-        ip-address: 192.168.29.233
-        hostname: 192.168.29.233
+        host: 192.168.29.233
         port: ${server.port}
-        prefer-ip-address: true
+        metadata:
+          namespace: ${spring.cloud.kubernetes.client.namespace}
+          name: ${spring.application.name}
       loadbalancer:
         enabled: true #开启kubernetes 服务负载均衡
         mode: POD #使用 pod 方式
