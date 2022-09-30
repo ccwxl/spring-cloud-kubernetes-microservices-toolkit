@@ -9,10 +9,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ProxyProperties {
     private String proxyHost;
 
-    public ProxyProperties(String proxyHost) {
-        this.proxyHost = proxyHost;
-    }
-
     public String getProxyHost() {
         return proxyHost;
     }
