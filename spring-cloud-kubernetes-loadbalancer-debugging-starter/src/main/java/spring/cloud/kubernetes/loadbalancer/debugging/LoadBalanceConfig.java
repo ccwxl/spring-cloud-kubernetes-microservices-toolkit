@@ -35,7 +35,6 @@ public class LoadBalanceConfig {
         ServiceInstanceListSupplier supplier = ServiceInstanceListSupplier
                 .builder()
                 .withBlockingDiscoveryClient()
-                .withBlockingHealthChecks()
                 .build(context);
         log.info("init NetSegmentServiceInstanceListSupplier.");
         return new NetSegmentServiceInstanceListSupplier(supplier, inetUtils);
