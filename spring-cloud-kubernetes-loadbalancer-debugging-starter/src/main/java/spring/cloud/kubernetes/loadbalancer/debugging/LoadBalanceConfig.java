@@ -31,16 +31,11 @@ public class LoadBalanceConfig {
 
     @Bean
     public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
-            ConfigurableApplicationContext context, ObjectProvider<InetUtils> inetUtils,
-            RestTemplateBuilder restTemplateBuilder) {
-        RestTemplate restTemplate = restTemplateBuilder
-                .setConnectTimeout(Duration.ofSeconds(1))
-                .setReadTimeout(Duration.ofSeconds(1))
-                .build();
+            ConfigurableApplicationContext context, ObjectProvider<InetUtils> inetUtils) {
         ServiceInstanceListSupplier supplier = ServiceInstanceListSupplier
                 .builder()
                 .withBlockingDiscoveryClient()
-                .withBlockingHealthChecks(restTemplate)
+                .withBlockingHealthChecks()
                 .build(context);
         log.info("init NetSegmentServiceInstanceListSupplier.");
         return new NetSegmentServiceInstanceListSupplier(supplier, inetUtils);

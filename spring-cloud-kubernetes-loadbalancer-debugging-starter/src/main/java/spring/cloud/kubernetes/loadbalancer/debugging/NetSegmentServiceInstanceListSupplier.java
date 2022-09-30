@@ -55,7 +55,7 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
         List<ServiceInstance> publicPodService = new ArrayList<>();
         for (ServiceInstance instance : instances) {
             if (IPV4Util.isSameAddress(resourceIp, instance.getHost())) {
-                //排除不健康的instance
+                //如何排除不健康的instance
                 targetList.add(instance);
             }
             //过滤出公共服务
