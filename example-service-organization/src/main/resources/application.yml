@@ -40,3 +40,8 @@ spring:
 
 server:
   port: 9003
+
+proxy:
+  config:
+    host: 192.168.8.183
+    port: 31684

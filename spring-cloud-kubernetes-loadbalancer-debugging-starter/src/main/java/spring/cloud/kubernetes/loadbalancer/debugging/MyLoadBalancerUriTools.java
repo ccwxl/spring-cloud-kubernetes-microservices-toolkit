@@ -15,7 +15,6 @@ import java.util.Optional;
  */
 public class MyLoadBalancerUriTools {
 
-
     private MyLoadBalancerUriTools() {
         throw new IllegalStateException("Can't instantiate a utility class");
     }

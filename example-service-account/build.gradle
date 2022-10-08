@@ -26,7 +26,7 @@ dependencies {
 
     //org.springframework.boot.gradle.plugin.JavaPluginAction.configureDevelopmentOnlyConfiguration
 //    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    //根据参数动态依赖库
+    //测试环境依赖. 生产环境去除
 //    developmentStage("org.springframework.boot:spring-boot-devtools")
 
     //kubernetes

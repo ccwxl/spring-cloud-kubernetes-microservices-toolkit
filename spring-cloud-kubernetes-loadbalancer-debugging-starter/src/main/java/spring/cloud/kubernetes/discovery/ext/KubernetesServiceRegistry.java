@@ -96,6 +96,7 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
                 .inNamespace(registration.getMetadata().get("namespace"))
                 .withName(registration.getMetadata().get("name"));
 
+
 //        EndpointAddress address = new EndpointAddressBuilder().withIp(registration.getHost()).build();
 //
 //        Endpoints updatedEndpoints = resource.edit()

@@ -51,6 +51,9 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
             chain.filter(request, response);
             return;
         }
+        log.info("pluginConfig.isProxy() :[{}]", pluginConfig.isProxy());
+        log.info("request.getHeader(Cons.LB_APISIX_PROXY) :[{}]", request.getHeader(Cons.LB_APISIX_PROXY));
+        log.info("request.getArg(Cons.LB_IP_PORT_PARAM) :[{}]", request.getArg(Cons.LB_IP_PORT_PARAM));
         //仅仅设置一个请求头
         if (pluginConfig.isProxy() && request.getHeader(Cons.LB_APISIX_PROXY) != null && request.getArg(Cons.LB_IP_PORT_PARAM) != null) {
             log.info("current request getArg :[{}]", request.getArg(Cons.LB_IP_PORT_PARAM));

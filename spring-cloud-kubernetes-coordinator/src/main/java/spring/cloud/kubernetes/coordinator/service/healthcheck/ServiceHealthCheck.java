@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.kubernetes.fabric8.discovery.KubernetesDiscoveryClient;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author wxl
  * 每10秒扫描下所有service的endpoint. 把已经不健康的endpoint(pod)清理掉.
@@ -20,7 +22,19 @@ public class ServiceHealthCheck {
     private KubernetesClient client;
 
     public void serviceEndpointCheck() {
-        //一直循环
+        while (isRunning()) {
+            List<String> services =
+                    discoveryClient.getServices();
+            //get service endpoint
 
+            //check endpoint address
+
+            //check heahcheck
+        }
+    }
+
+    private boolean isRunning() {
+
+        return false;
     }
 }
