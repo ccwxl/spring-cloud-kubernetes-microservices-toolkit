@@ -82,5 +82,4 @@ function _M.new(up_nodes, upstream)
     }
 end
 
-
 return _M

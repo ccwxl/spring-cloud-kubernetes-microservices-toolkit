@@ -13,13 +13,10 @@ import org.springframework.cloud.kubernetes.commons.PodUtils;
 import org.springframework.cloud.kubernetes.commons.discovery.KubernetesServiceInstance;
 import org.springframework.cloud.loadbalancer.core.*;
 import reactor.core.publisher.Mono;
-import spring.cloud.kubernetes.discovery.ext.KubernetesRegistration;
-import spring.cloud.kubernetes.loadbalancer.ProxyContextHolder;
+import spring.cloud.kubernetes.loadbalancer.Cons;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -88,16 +85,15 @@ public class NetSegmentLoadBalancer implements ReactorServiceInstanceLoadBalance
 
         ServiceInstance instance = instances.get(pos % instances.size());
 
-        //TODO 如何判断. 根据当前注册的元数据判断. ok
+        //如何判断. 根据当前注册的元数据判断
         //如果是本地服务. 而且只能请求公共服务. 那么就要去请求代理服务. 因为无法直接请求pod.
-        //要重写URL. 怎么办. 需要在每个框架中独立实现... 或者使用header?
-
+        //要重写URL.{@link CustomLoadBalancerUriTools}
         //判断标准
         // 1. 在 pod 外
         // 2. spring.cloud.kubernetes.discovery.register =true 说明是本地服务.
         // 3. instance 的元数据中包含 k8s-public-service=true. 这个时候需要请求代理服务
-        if (!podUtils.isInsideKubernetes() && register && instance.getMetadata().containsKey("k8s-public-service")) {
-            ProxyContextHolder.setRealPodService(instance.getHost() + ":" + instance.getPort());
+        if (!podUtils.isInsideKubernetes() && register && instance.getMetadata().containsKey(Cons.K8S_PUBLIC_SERVICE)) {
+            instance.getMetadata().put(Cons.K8S_PROXY_SERVICE, instance.getHost() + ":" + instance.getPort());
             instance = getProxyInstance(instance);
         }
         return new DefaultResponse(instance);

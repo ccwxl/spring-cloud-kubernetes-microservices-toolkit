@@ -8,7 +8,6 @@ import org.springframework.http.client.support.HttpRequestWrapper;
 import org.springframework.util.StringUtils;
 import spring.cloud.kubernetes.loadbalancer.Cons;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
-import spring.cloud.kubernetes.loadbalancer.ProxyContextHolder;
 
 import java.io.IOException;
 

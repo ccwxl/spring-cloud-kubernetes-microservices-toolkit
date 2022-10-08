@@ -3,6 +3,7 @@ package spring.cloud.kubernetes.loadbalancer.debugging;
 /**
  * @author wxl
  */
+@SuppressWarnings("all")
 public class IPV4Util {
     public static final String DEFAULT_SUBNET_MASK_A = "255.0.0.0";
     public static final String DEFAULT_SUBNET_MASK_B = "255.255.0.0";
@@ -14,20 +15,20 @@ public class IPV4Util {
     public static final String TYPE_IP_D = "D";
     public static final String TYPE_IP_LOCATE = "locate";
 
-    public static boolean isSameAddress(String resourceIp, String requestIp){
-        if(getIpType(resourceIp).equals(getIpType(requestIp))){
+    public static boolean isSameAddress(String resourceIp, String requestIp) {
+        if (getIpType(resourceIp).equals(getIpType(requestIp))) {
             return isSameAddress(resourceIp, requestIp, getIpDefaultMask(getIpType(resourceIp)));
         }
         return false;
     }
 
-    public static boolean isSameAddress(String resourceIp, String requestIp, String subnetMask){
+    public static boolean isSameAddress(String resourceIp, String requestIp, String subnetMask) {
         String resourceAddr = getAddrIp(resourceIp, subnetMask);
         String requestAddr = getAddrIp(requestIp, subnetMask);
         return resourceAddr.equals(requestAddr);
     }
 
-    private static String getIpDefaultMask(String ipType){
+    private static String getIpDefaultMask(String ipType) {
         return switch (ipType) {
             case TYPE_IP_A -> DEFAULT_SUBNET_MASK_A;
             case TYPE_IP_B -> DEFAULT_SUBNET_MASK_B;
@@ -36,10 +37,10 @@ public class IPV4Util {
         };
     }
 
-    private static String getBinaryIp(String data){
+    private static String getBinaryIp(String data) {
         String[] datas = data.split("\\.");
         StringBuilder binaryIp = new StringBuilder();
-        for(String ipStr : datas){
+        for (String ipStr : datas) {
             long signIp = Long.parseLong(ipStr);
             String binary = Long.toBinaryString(signIp);
             long binaryInt = Long.parseLong(binary);
@@ -49,11 +50,11 @@ public class IPV4Util {
         return binaryIp.toString();
     }
 
-    private static String getAddrIp(String ip, String subnetMask){
+    private static String getAddrIp(String ip, String subnetMask) {
         StringBuilder addrIp = new StringBuilder();
         String binaryIp = getBinaryIp(ip);
         String binarySubnetMask = getBinaryIp(subnetMask);
-        for(int i = 0 ; i < 32 ; i++){
+        for (int i = 0; i < 32; i++) {
             byte ipByte = Byte.parseByte(String.valueOf(binaryIp.charAt(i)));
             byte subnetMaskByte = Byte.parseByte(String.valueOf(binarySubnetMask.charAt(i)));
             addrIp.append(ipByte & subnetMaskByte);
@@ -61,21 +62,21 @@ public class IPV4Util {
         return addrIp.toString();
     }
 
-    public static String getIpType(String ip){
+    public static String getIpType(String ip) {
         String binaryIp = getBinaryIp(ip);
-        if(binaryIp.startsWith("127")){
+        if (binaryIp.startsWith("127")) {
             return TYPE_IP_LOCATE;
         }
-        if(binaryIp.startsWith("0")){
+        if (binaryIp.startsWith("0")) {
             return TYPE_IP_A;
         }
-        if(binaryIp.startsWith("10")){
+        if (binaryIp.startsWith("10")) {
             return TYPE_IP_B;
         }
-        if(binaryIp.startsWith("110")){
+        if (binaryIp.startsWith("110")) {
             return TYPE_IP_C;
         }
-        if(binaryIp.startsWith("1110")){
+        if (binaryIp.startsWith("1110")) {
             return TYPE_IP_D;
         }
         throw new IllegalArgumentException("invalid ip address");

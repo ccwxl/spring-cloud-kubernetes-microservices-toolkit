@@ -12,7 +12,7 @@ public class ProxyProperties {
 
     private int port;
 
-    private String prefix="/apisixporxy";
+    private String prefix="/apisixproxy";
 
     public String getHost() {
         return host;

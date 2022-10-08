@@ -10,6 +10,7 @@ import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
+import spring.cloud.kubernetes.loadbalancer.Cons;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
 import java.net.InetAddress;
@@ -37,7 +38,7 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
     private List<ServiceInstance> filterByNetSegment(List<ServiceInstance> instances) {
         InetAddress host = null;
         String loadbalancerIp = LoadbalancerContextHolder.getLoadbalancerIp();
-        log.info("NetSegmentServiceInstanceListSupplier Ip :[{}]", loadbalancerIp);
+        log.info("NetSegmentServiceInstanceListSupplier loadbalancerIp :[{}]", loadbalancerIp);
         try {
             if (StringUtils.hasText(loadbalancerIp)) {
                 host = InetAddress.getByName(loadbalancerIp);
@@ -59,11 +60,10 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
             }
             //过滤出公共服务
             if (isPublicPodService(instance)) {
-                instance.getMetadata().put("k8s-public-service", "true");
+                instance.getMetadata().put(Cons.K8S_PUBLIC_SERVICE, "true");
                 publicPodService.add(instance);
             }
         }
-
         if (CollectionUtils.isEmpty(targetList)) {
             //如果本地没有任何服务. 那么只去请求k8s的pod. 不要去请求其他开发者的本地服务. 以免出现混乱. 将 instance public-service=true 的过滤出来. 仅适用于k8s内pod的路由方式
             log.info("Selected Pub services are: [{}]", publicPodService);

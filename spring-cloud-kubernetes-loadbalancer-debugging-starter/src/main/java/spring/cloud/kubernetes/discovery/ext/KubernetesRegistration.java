@@ -13,8 +13,18 @@ import java.util.HashMap;
 @ConfigurationProperties("spring.cloud.kubernetes.discovery")
 public class KubernetesRegistration extends KubernetesServiceInstance implements Registration {
 
+    private boolean register = true;
+
     public KubernetesRegistration() {
         this.setMetadata(new HashMap<>());
+    }
+
+    public boolean isRegister() {
+        return register;
+    }
+
+    public void setRegister(boolean register) {
+        this.register = register;
     }
 }
 

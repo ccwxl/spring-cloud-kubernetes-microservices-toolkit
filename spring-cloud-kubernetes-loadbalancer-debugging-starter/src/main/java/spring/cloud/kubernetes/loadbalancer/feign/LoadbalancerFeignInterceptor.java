@@ -5,7 +5,6 @@ import feign.RequestTemplate;
 import org.springframework.util.StringUtils;
 import spring.cloud.kubernetes.loadbalancer.Cons;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
-import spring.cloud.kubernetes.loadbalancer.ProxyContextHolder;
 
 /**
  * @author wxl

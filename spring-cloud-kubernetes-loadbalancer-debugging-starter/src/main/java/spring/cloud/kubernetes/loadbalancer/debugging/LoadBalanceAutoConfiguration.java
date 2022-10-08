@@ -23,7 +23,6 @@ import org.springframework.context.annotation.Profile;
 @AutoConfigureBefore(BlockingLoadBalancerClientAutoConfiguration.class)
 public class LoadBalanceAutoConfiguration {
 
-
     @Bean
     @ConditionalOnBean(LoadBalancerClientFactory.class)
     public LoadBalancerClient blockingLoadBalancerClient(LoadBalancerClientFactory loadBalancerClientFactory, ProxyProperties proxyProperties) {

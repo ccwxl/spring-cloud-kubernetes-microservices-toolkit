@@ -9,7 +9,10 @@ import org.apache.apisix.plugin.runner.filter.PluginFilterChain;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.*;
+import org.springframework.cloud.client.loadbalancer.DefaultRequestContext;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerLifecycle;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerLifecycleValidator;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer;
 import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
@@ -51,38 +54,30 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
             chain.filter(request, response);
             return;
         }
+        String proxy = request.getArg(Cons.LB_IP_PORT_PARAM);
         //仅仅设置一个请求头
-        if (pluginConfig.isProxy() && request.getArg(Cons.LB_IP_PORT_PARAM) != null) {
-            log.info("pluginConfig.isProxy() :[{}]", pluginConfig.isProxy());
-            log.info("request.getArg(Cons.LB_IP_PORT_PARAM) :[{}]", request.getArg(Cons.LB_IP_PORT_PARAM));
-            log.info("request.getPath: [{}]", request.getPath());
-            request.setHeader(Cons.LB_IP_PORT, request.getArg(Cons.LB_IP_PORT_PARAM));
+        if (pluginConfig.isProxy() && proxy != null) {
+            log.info("proxy request: pod ip is :[{}],request path is :[{}] ", proxy, request.getPath());
+            request.setHeader(Cons.LB_IP_PORT, proxy);
         } else {
             //服务发现
             if (loadBalancerClient instanceof BlockingLoadBalancerClient blockingLoadBalancerClient) {
-                doServiceChoose(blockingLoadBalancerClient, request);
+                doServiceChoose(pluginConfig, blockingLoadBalancerClient, request);
             }
         }
         chain.filter(request, response);
     }
 
-    private void doServiceChoose(BlockingLoadBalancerClient blockingLoadBalancerClient, HttpRequest request) {
-        long startTime = System.currentTimeMillis();
-        PluginConfig pluginConfig = getPluginConfig(request);
-        if (pluginConfig == null) {
-            return;
-        }
+    private void doServiceChoose(PluginConfig pluginConfig, BlockingLoadBalancerClient blockingLoadBalancerClient, HttpRequest request) {
         String sourceIp = request.getSourceIP();
-        log.info("Req client Ip: [{}] path: [{}]", sourceIp, request.getPath());
         LoadbalancerContextHolder.setLoadbalancerIp(sourceIp);
         Set<LoadBalancerLifecycle> supportedLifecycleProcessors = getSupportedLifecycleProcessors(pluginConfig.getService());
         supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(ReactiveLoadBalancer.REQUEST));
         ServiceInstance serviceInstance = blockingLoadBalancerClient.choose(pluginConfig.getService(), ReactiveLoadBalancer.REQUEST);
-        log.info("choose serviceInstance is: [{}]", serviceInstance.getInstanceId() + ":" + serviceInstance.getHost() + ":" + serviceInstance.getPort());
-        request.setHeader("Kubernetes-Service-Choose-Filter-Cost-Ms", System.currentTimeMillis() - startTime + "ms");
-        request.setHeader("Kubernetes-Service-Choose-Service", serviceInstance.toString());
+        log.info("gateway choose service is : [{}]", serviceInstance.getHost() + ":" + serviceInstance.getPort());
         request.setHeader(Cons.LB_IP, sourceIp);
         request.setHeader(Cons.LB_IP_PORT, serviceInstance.getHost() + ":" + serviceInstance.getPort());
+        LoadbalancerContextHolder.resetLocaleContext();
     }
 
     @Nullable

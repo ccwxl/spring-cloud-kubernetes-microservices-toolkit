@@ -6,12 +6,9 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerUriTools;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer;
 import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
 import org.springframework.util.StringUtils;
-import org.springframework.web.util.UriComponentsBuilder;
-import spring.cloud.kubernetes.loadbalancer.ProxyContextHolder;
+import spring.cloud.kubernetes.loadbalancer.Cons;
 
 import java.net.URI;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author wxl
@@ -29,13 +26,13 @@ public class DebuggingBlockingLoadBalancerClient extends BlockingLoadBalancerCli
 
     @Override
     public URI reconstructURI(ServiceInstance serviceInstance, URI original) {
-        String podService = ProxyContextHolder.getRealPodService();
-        if (StringUtils.hasLength(podService)) {
-            //如果当前需要请求代理. 增加前缀 TODO
-            URI uri = MyLoadBalancerUriTools.reconstructURI(serviceInstance, original, proxyProperties.getPrefix(), podService);
+        if (StringUtils.hasLength(serviceInstance.getMetadata().get(Cons.K8S_PROXY_SERVICE))) {
+            //如果当前需要请求代理. 增加前缀
+            URI uri = CustomLoadBalancerUriTools.reconstructURI(serviceInstance, original,
+                    proxyProperties.getPrefix(), serviceInstance.getMetadata().get(Cons.K8S_PROXY_SERVICE));
+            log.info("request proxy origin url: [{}] proxy url: [{}]", original.toASCIIString(), uri.toASCIIString());
             return uri;
         }
-        log.info("DebuggingBlockingLoadBalancerClient reconstructURI.");
         return LoadBalancerUriTools.reconstructURI(serviceInstance, original);
     }
 }

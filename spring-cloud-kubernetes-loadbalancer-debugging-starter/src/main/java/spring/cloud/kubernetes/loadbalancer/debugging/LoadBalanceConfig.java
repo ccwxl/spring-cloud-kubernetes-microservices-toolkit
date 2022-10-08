@@ -29,7 +29,6 @@ public class LoadBalanceConfig {
     public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment, LoadBalancerClientFactory loadBalancerClientFactory,
                                                                                    PodUtils<Pod> podUtils, ProxyProperties proxyProperties) {
         String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
-        log.info("init NetSegmentLoadBalancer.");
         return new NetSegmentLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name,
                 environment.getProperty("spring.cloud.kubernetes.discovery.register", "false"), podUtils, proxyProperties);
     }
@@ -41,7 +40,6 @@ public class LoadBalanceConfig {
                 .builder()
                 .withBlockingDiscoveryClient()
                 .build(context);
-        log.info("init NetSegmentServiceInstanceListSupplier.");
         return new NetSegmentServiceInstanceListSupplier(supplier, inetUtils);
     }
 }
