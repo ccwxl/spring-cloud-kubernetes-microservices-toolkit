@@ -14,6 +14,7 @@ import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalanc
 import org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import spring.cloud.kubernetes.loadbalancer.Cons;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
@@ -45,11 +46,20 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
 
     @Override
     public void filter(HttpRequest request, HttpResponse response, PluginFilterChain chain) {
-        log.info("current request arg :[{}]", request.getArgs());
-        log.info("current request path :[{}]", request.getPath());
-        log.info("current request getArg :[{}]", request.getArg(Cons.LB_IP_PORT_PARAM));
-        if (loadBalancerClient instanceof BlockingLoadBalancerClient blockingLoadBalancerClient) {
-            doServiceChoose(blockingLoadBalancerClient, request);
+        PluginConfig pluginConfig = getPluginConfig(request);
+        if (pluginConfig == null) {
+            chain.filter(request, response);
+            return;
+        }
+        //仅仅设置一个请求头
+        if (pluginConfig.isProxy() && request.getHeader(Cons.LB_APISIX_PROXY) != null && request.getArg(Cons.LB_IP_PORT_PARAM) != null) {
+            log.info("current request getArg :[{}]", request.getArg(Cons.LB_IP_PORT_PARAM));
+            request.setHeader(Cons.LB_IP_PORT, request.getArg(Cons.LB_IP_PORT_PARAM));
+        } else {
+            //服务发现
+            if (loadBalancerClient instanceof BlockingLoadBalancerClient blockingLoadBalancerClient) {
+                doServiceChoose(blockingLoadBalancerClient, request);
+            }
         }
         chain.filter(request, response);
     }
@@ -76,6 +86,9 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
     @Nullable
     private PluginConfig getPluginConfig(HttpRequest request) {
         String config = request.getConfig(this);
+        if (!StringUtils.hasLength(config)) {
+            return null;
+        }
         PluginConfig pluginConfig = null;
         try {
             pluginConfig = objectMapper.readValue(config, PluginConfig.class);

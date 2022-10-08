@@ -43,12 +43,6 @@ end
 
 
 function _M.new(up_nodes, upstream)
-    --core.log.error("upstream: ", core.json.encode(upstream, true))
-    local safe_limit, servers = 0, {}
-    for serv, weight in pairs(up_nodes) do
-        safe_limit = safe_limit + weight + 1
-        servers[serv] = serv
-    end
     local nodes_count = nkeys(up_nodes)
 
     return {
@@ -58,7 +52,6 @@ function _M.new(up_nodes, upstream)
                             return nil, "all upstream servers tried"
             end
             local svc_key = fetch_chash_hash_key(ctx, upstream)
---             return servers[svc_key]
             return svc_key
         end,
         after_balance = function (ctx, before_retry)

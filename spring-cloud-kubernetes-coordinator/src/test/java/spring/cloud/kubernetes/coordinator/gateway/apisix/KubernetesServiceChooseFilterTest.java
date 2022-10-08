@@ -4,28 +4,26 @@ import io.github.api7.A6.HTTPReqCall.Req;
 import org.apache.apisix.plugin.runner.HttpRequest;
 import org.apache.apisix.plugin.runner.HttpResponse;
 import org.apache.apisix.plugin.runner.filter.PluginFilterChain;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.ReflectionUtils;
+import spring.cloud.kubernetes.coordinator.CoordinatorService;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Map;
 
-/**
- * @author wxl
- */
-@Component
-@ConditionalOnProperty(value = "filter.test.enabled", havingValue = "true", matchIfMissing = false)
-public class FilterTest implements CommandLineRunner {
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest(classes = CoordinatorService.class)
+public class KubernetesServiceChooseFilterTest {
 
     @Autowired
     private KubernetesServiceChooseFilter kubernetesServiceChooseFilter;
 
-    @Override
-    public void run(String... args) throws Exception {
+    @Test
+    public void filter() throws NoSuchFieldException {
         HttpResponse httpResponse = new HttpResponse(1);
         HttpRequest httpRequest = new HttpRequest(new Req());
         httpRequest.initCtx(httpResponse, Map.of(kubernetesServiceChooseFilter.name(), """

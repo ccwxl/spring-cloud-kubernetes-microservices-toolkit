@@ -15,4 +15,6 @@ public class PluginConfig {
     private String namespace;
 
     private String service;
+
+    private boolean proxy = false;
 }

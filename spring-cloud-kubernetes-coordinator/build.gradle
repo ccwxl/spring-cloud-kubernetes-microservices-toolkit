@@ -31,6 +31,8 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-loadbalancer'
     implementation DependencyLibrary.SNAKEYAML
     implementation DependencyLibrary.CAFFEINE
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 dependencyManagement {

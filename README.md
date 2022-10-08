@@ -1,12 +1,14 @@
-## 调用链路
+### k8s 调试工具
 
-`开发者本地`--->`apisix-gateway`-->`service-account`-->`service-uaa`-->`organization-system`
+k8s 环境下开发调试 spring cloud 微服务
 
-## 实现
+## 功能
 
-k8s作为注册中心
-可以通过`apisix`直接调用的本地服务
-如果本地服务启动.服务间调用优先调用本地服务
-保证测试环境的公共服务不要调用到本地服务
+- k8s作为注册中心
+- 使用`apisix`作为代理. 本地服务直接调用的k8s内的服务
+- 使用`apisix`的`java`插件实现协调和服务发现
+- 保证测试环境的公共服务不要调用到本地服务.服务调用隔离
 
 ## config ui
+
+- 实现一个k8s的configmap的ui. 支持微服务的配置中心

@@ -24,6 +24,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    //org.springframework.boot.gradle.plugin.JavaPluginAction.configureDevelopmentOnlyConfiguration
+//    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    //根据参数动态依赖库
+//    developmentStage("org.springframework.boot:spring-boot-devtools")
+
     //kubernetes
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-discovery'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-loadbalancer'
