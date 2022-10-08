@@ -11,6 +11,4 @@ public class Cons {
 
     public static final String LB_IP_PORT_PARAM = "a_p_n";
 
-    public static final String LB_APISIX_PROXY = "x-apisix-pod-proxy";
-
 }
