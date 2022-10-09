@@ -102,7 +102,7 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
 
     @Override
     public void deregister(KubernetesRegistration registration) {
-        LOG.info("De-registering service with kubernetes: " + registration.getInstanceId());
+        LOG.info("De-registering service with kubernetes: " + registration.getServiceId());
         Endpoints originEndpoint = client.endpoints()
                 .inNamespace(registration.getNamespace())
                 .withName(registration.getServiceId())

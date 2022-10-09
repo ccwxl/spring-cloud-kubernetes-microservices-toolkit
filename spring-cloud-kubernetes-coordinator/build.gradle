@@ -21,6 +21,7 @@ configurations {
 
 dependencies {
     implementation(project(":spring-cloud-kubernetes-loadbalancer-debugging-starter"))
+    implementation(project(":spring-cloud-kubernetes-configmap-ui"))
     implementation('org.apache.apisix:apisix-runner-core:0.3.0') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-log4j2'
     }

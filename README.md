@@ -12,3 +12,6 @@ k8s 环境下开发调试 spring cloud 微服务
 ## config ui
 
 - 实现一个k8s的configmap的ui. 支持微服务的配置中心
+- webjar
+- Vue+Vite
+- redis 存储历史版本
