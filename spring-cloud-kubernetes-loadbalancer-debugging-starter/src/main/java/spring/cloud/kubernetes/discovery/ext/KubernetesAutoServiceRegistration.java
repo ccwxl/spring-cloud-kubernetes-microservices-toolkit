@@ -13,6 +13,7 @@ import org.springframework.core.env.Environment;
 /**
  * @author wxl
  */
+@SuppressWarnings("all")
 public class KubernetesAutoServiceRegistration extends AbstractAutoServiceRegistration<KubernetesRegistration> {
     private final KubernetesDiscoveryProperties properties;
     private final KubernetesRegistration registration;

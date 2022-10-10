@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author wxl
  */
 @SpringBootApplication
-public class ConfigMapUiApp {
+public class ConfigMapUiService {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(ConfigMapUiApp.class, args);
+        SpringApplication.run(ConfigMapUiService.class, args);
     }
 }
