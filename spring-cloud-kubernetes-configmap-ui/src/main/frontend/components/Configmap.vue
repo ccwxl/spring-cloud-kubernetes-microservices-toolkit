@@ -1,38 +1,28 @@
-<script>
-import {defineComponent} from 'vue'
-import {NConfigProvider, NInput, NDatePicker, NSpace} from 'naive-ui'
-// theme
-import {createTheme, inputDark, datePickerDark} from 'naive-ui'
-// locale & dateLocale
-import {zhCN, dateZhCN} from 'naive-ui'
-
-export default defineComponent({
-  components: {
-    NConfigProvider,
-    NInput,
-    NDatePicker,
-    NSpace
-  },
-  setup() {
-    return {
-      lightTheme: createTheme([inputDark, datePickerDark]),
-      zhCN,
-      dateZhCN
-    }
-  }
-})
-</script>
-
 <template>
-  <n-config-provider :theme="lightTheme" :locale="zhCN" :date-locale="dateZhCN">
-    <n-space vertical>
-      <n-input/>
-    </n-space>
-  </n-config-provider>
+  <n-layout has-sider>
+    <n-layout-sider bordered content-style="padding: 24px;">
+      海淀桥
+    </n-layout-sider>
+    <n-layout>
+      <n-layout-header bordered>
+        颐和园路
+      </n-layout-header>
+      <n-layout-content content-style="padding: 24px;">
+        平山道
+      </n-layout-content>
+      <n-layout-footer bordered>
+        成府路
+      </n-layout-footer>
+    </n-layout>
+  </n-layout>
 </template>
 
-<style>
-body {
-  background: black;
+<style scoped>
+.n-layout-header {
+  padding: 24px;
+}
+
+.n-layout-footer {
+  padding: 24px;
 }
 </style>
