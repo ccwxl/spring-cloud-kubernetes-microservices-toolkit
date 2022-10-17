@@ -7,13 +7,12 @@ import {
 import routes from './routes'
 
 // NProgress
-// @ts-ignore
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 const router = createRouter({
     history: createWebHistory(
-        import.meta.env.MODE === 'production' ? '/dolphinscheduler/ui/' : '/'
+        import.meta.env.MODE === 'production' ? '/configmap/ui/' : '/'
     ),
     routes
 })

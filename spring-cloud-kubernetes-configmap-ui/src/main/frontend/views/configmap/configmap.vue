@@ -1,12 +1,22 @@
+<script setup lang="ts">
+import ConfigmapList from './configmapList.vue'
+import HistoryConfigmapList from './historyConfigmapList.vue'
+</script>
 <template>
   <div class="common-layout">
     <el-container style="height: 100%;">
-      <el-aside width="200px">配置文件列表页面</el-aside>
+      <el-aside width="200px">
+        <ConfigmapList/>
+      </el-aside>
       <el-container>
-        <el-header>页面详情页</el-header>
-        <el-main>编译配置页面</el-main>
+        <el-header>配置详情页</el-header>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
-      <el-aside width="200px">文件变更历史页面</el-aside>
+      <el-aside width="200px">
+        <HistoryConfigmapList/>
+      </el-aside>
     </el-container>
   </div>
 </template>
