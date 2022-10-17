@@ -24,8 +24,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    //org.springframework.boot.gradle.plugin.JavaPluginAction.configureDevelopmentOnlyConfiguration
-    //developmentOnly("org.springframework.boot:spring-boot-devtools")
     //测试环境依赖. 生产环境去除
     developmentStage("org.springframework.boot:spring-boot-devtools")
 

@@ -1,5 +1,12 @@
-<script setup lang="ts">
-import Configmap from './components/Configmap.vue'</script>
 <template>
-  <Configmap/>
+    <router-view/>
 </template>
+
+<style lang="css">
+html, body, #app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>

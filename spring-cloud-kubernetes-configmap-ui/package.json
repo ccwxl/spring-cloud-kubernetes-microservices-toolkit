@@ -11,16 +11,16 @@
   "dependencies": {
     "@vicons/ionicons5": "^0.12.0",
     "axios": "^1.1.2",
-    "naive-ui": "^2.33.4",
+    "element-plus": "^2.2.18",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.23",
     "pinia-plugin-persistedstate": "^2.2.0",
     "qs": "^6.11.0",
-    "unplugin-auto-import": "^0.11.2",
-    "unplugin-vue-components": "^0.22.8",
     "vue": "^3.2.37",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {
+    "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^3.1.0",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
