@@ -2,6 +2,8 @@
 
 k8s 环境下开发调试 spring cloud 微服务
 
+![示意](hint.png)
+
 ## 功能
 
 - k8s作为注册中心
