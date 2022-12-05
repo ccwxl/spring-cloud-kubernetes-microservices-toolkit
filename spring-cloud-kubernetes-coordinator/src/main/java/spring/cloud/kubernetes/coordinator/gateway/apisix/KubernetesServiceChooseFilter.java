@@ -54,16 +54,9 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
             chain.filter(request, response);
             return;
         }
-        String proxy = request.getArg(Cons.LB_IP_PORT_PARAM);
-        //仅仅设置一个请求头
-        if (pluginConfig.isProxy() && proxy != null) {
-            log.info("proxy request: pod ip is :[{}],request path is :[{}] ", proxy, request.getPath());
-            request.setHeader(Cons.LB_IP_PORT, proxy);
-        } else {
-            //服务发现
-            if (loadBalancerClient instanceof BlockingLoadBalancerClient blockingLoadBalancerClient) {
-                doServiceChoose(pluginConfig, blockingLoadBalancerClient, request);
-            }
+        //服务发现
+        if (loadBalancerClient instanceof BlockingLoadBalancerClient blockingLoadBalancerClient) {
+            doServiceChoose(pluginConfig, blockingLoadBalancerClient, request);
         }
         chain.filter(request, response);
     }

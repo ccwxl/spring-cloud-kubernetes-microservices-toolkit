@@ -10,6 +10,7 @@ import org.springframework.cloud.client.loadbalancer.EmptyResponse;
 import org.springframework.cloud.client.loadbalancer.Request;
 import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.kubernetes.commons.PodUtils;
+import org.springframework.cloud.kubernetes.commons.discovery.DefaultKubernetesServiceInstance;
 import org.springframework.cloud.kubernetes.commons.discovery.KubernetesServiceInstance;
 import org.springframework.cloud.loadbalancer.core.*;
 import reactor.core.publisher.Mono;
@@ -90,7 +91,7 @@ public class NetSegmentLoadBalancer implements ReactorServiceInstanceLoadBalance
         //要重写URL.{@link CustomLoadBalancerUriTools}
         //判断标准
         // 1. 在 pod 外
-        // 2. spring.cloud.kubernetes.discovery.register =true 说明是本地服务.
+        // 2. spring.cloud.kubernetes.discovery.register.enabled = true 说明是本地服务.
         // 3. instance 的元数据中包含 k8s-public-service=true. 这个时候需要请求代理服务
         if (!podUtils.isInsideKubernetes() && register && instance.getMetadata().containsKey(Cons.K8S_PUBLIC_SERVICE)) {
             instance.getMetadata().put(Cons.K8S_PROXY_SERVICE, instance.getHost() + ":" + instance.getPort());
@@ -101,6 +102,6 @@ public class NetSegmentLoadBalancer implements ReactorServiceInstanceLoadBalance
 
     private ServiceInstance getProxyInstance(ServiceInstance si) {
 
-        return new KubernetesServiceInstance(si.getInstanceId(), si.getServiceId(), proxyProperties.getHost(), proxyProperties.getPort(), si.getMetadata(), si.isSecure());
+        return new DefaultKubernetesServiceInstance(si.getInstanceId(), si.getServiceId(), proxyProperties.getHost(), proxyProperties.getPort(), si.getMetadata(), si.isSecure());
     }
 }

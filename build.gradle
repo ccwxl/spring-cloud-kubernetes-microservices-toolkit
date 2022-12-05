@@ -1,2 +1,62 @@
-group 'cn.nvr.microservices.toolkit'
-version '1.0.0'
+import java.nio.charset.Charset
+
+import static cc.sofast.foundation.dependency.SofastDependencyPlugin.SBV
+import static cc.sofast.foundation.dependency.SofastDependencyPlugin.SCV
+
+subprojects { sp ->
+    apply plugin: 'maven-publish'
+    apply plugin: 'sofast.dependency.manager'
+
+    group 'cc.sofast.springcloud.kubernetes.microservices.toolkit'
+    sp.version = '0.0.1'
+
+    sourceCompatibility = '17'
+
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, "minutes"
+    }
+
+    ext {
+        compileJava.options.encoding = "UTF-8"
+        compileTestJava.options.encoding = "UTF-8"
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    clean {
+        delete 'out'
+        delete "$rootDir/build"
+    }
+
+    build {
+        clean
+        build
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/release' }
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:" + SBV
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:" + SCV
+        }
+    }
+}
+

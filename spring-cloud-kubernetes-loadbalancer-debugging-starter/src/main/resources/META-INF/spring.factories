@@ -4,4 +4,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   spring.cloud.kubernetes.loadbalancer.debugging.LoadBalanceAutoConfiguration,\
   spring.cloud.kubernetes.loadbalancer.feign.LoadbalancerFeignAutoConfiguration,\
   spring.cloud.kubernetes.loadbalancer.rest.LoadbalancerRestTemplateAutoConfiguration,\
-  spring.cloud.kubernetes.loadbalancer.web.LoadbalancerHandlerInterceptorConfiguration
+  spring.cloud.kubernetes.loadbalancer.web.LoadbalancerHandlerInterceptorConfiguration,\
+  spring.cloud.kubernetes.loadbalancer.webclient.WebclientLoadBalancerClientRequestTransformerAutoConfiguration

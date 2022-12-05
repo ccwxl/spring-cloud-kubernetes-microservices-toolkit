@@ -1,5 +1,7 @@
 package spring.cloud.kubernetes.loadbalancer.web;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +9,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import spring.cloud.kubernetes.loadbalancer.Cons;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author wxl

@@ -1,15 +1,39 @@
+server:
+  port: 9003
+
 spring:
   application:
     name: organization
+  main:
+    cloud-platform: kubernetes
   profiles:
-    active: test
+    active: local
   cloud:
     kubernetes:
-      enabled: true
       discovery:
         enabled: true
+        all-namespaces: false
+        register:
+          enabled: true
+          host: 192.168.0.28 # 本机ip
+          port: ${server.port}
+          service-id: ${spring.application.name}
+          namespace: ${spring.cloud.kubernetes.client.namespace}
+          metadata:
+            namespace: ${spring.cloud.kubernetes.client.namespace}
+            name: ${spring.application.name}
       loadbalancer:
-        mode: service
+        mode: POD # 使用 pod 方式
+        port-name: server # service port 名称
+      client:
+        namespace: spring-cloud-k8s
+    discovery:
+      blocking:
+        enabled: true
 
-server:
-  port: 9003
+
+proxy:
+  config:
+    host: apisix.proxy.cc
+    port: 31684
+    k8s-net-prefix: 10.1;10.244

@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(Feign.class)
 public class LoadbalancerFeignAutoConfiguration {
     @Bean
-    public LoadbalancerFeignInterceptor loadbalancerFeignInterceptor() {
+    public DebugFeignHeadersTransformer debugHeadersTransformer() {
 
-        return new LoadbalancerFeignInterceptor();
+        return new DebugFeignHeadersTransformer();
     }
 }

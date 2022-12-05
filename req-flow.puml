@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+account -> uaa: Login Request Call
+uaa --> organization: Request Organization
+@enduml

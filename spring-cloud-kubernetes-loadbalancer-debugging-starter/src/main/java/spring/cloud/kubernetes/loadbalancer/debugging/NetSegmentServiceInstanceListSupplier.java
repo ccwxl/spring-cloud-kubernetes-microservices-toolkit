@@ -24,10 +24,12 @@ import java.util.List;
 public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInstanceListSupplier {
 
     private final InetUtils inetUtils;
+    private final ProxyProperties proxyProperties;
 
-    public NetSegmentServiceInstanceListSupplier(ServiceInstanceListSupplier delegate, ObjectProvider<InetUtils> inetUtils) {
+    public NetSegmentServiceInstanceListSupplier(ServiceInstanceListSupplier delegate, ObjectProvider<InetUtils> inetUtils, ProxyProperties proxyProperties) {
         super(delegate);
         this.inetUtils = inetUtils.getIfAvailable(() -> new InetUtils(new InetUtilsProperties()));
+        this.proxyProperties = proxyProperties;
     }
 
     @Override
@@ -75,6 +77,14 @@ public class NetSegmentServiceInstanceListSupplier extends DelegatingServiceInst
     }
 
     private boolean isPublicPodService(ServiceInstance instance) {
-        return instance.getHost().startsWith("10.244");
+        if (StringUtils.hasText(proxyProperties.getK8sNetPrefix())) {
+            String[] netSplit = proxyProperties.getK8sNetPrefix().split(";");
+            for (String net : netSplit) {
+                if (instance.getHost().startsWith(net)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

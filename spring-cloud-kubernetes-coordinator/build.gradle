@@ -1,48 +1,34 @@
-import cn.nvr.iothub.dependency.DependencyLibrary
-
 plugins {
-    id('dependency.manager.plugin')
     id 'distribution'
 }
 
-bootJar {
-    enabled true
+jar {
+    enabled(true)
 }
 
-group 'cn.nvr.microservices.toolkit'
-version = '0.0.1'
-sourceCompatibility = '17'
+bootJar {
+    enabled(true)
+}
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+springBoot {
+    buildInfo()
 }
 
 dependencies {
     implementation(project(":spring-cloud-kubernetes-loadbalancer-debugging-starter"))
-    implementation(project(":spring-cloud-kubernetes-configmap-ui"))
     implementation('org.apache.apisix:apisix-runner-core:0.3.0') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-log4j2'
     }
-//    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
     implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-discovery'
     implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-loadbalancer'
-    implementation DependencyLibrary.SNAKEYAML
-    implementation DependencyLibrary.CAFFEINE
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
-}
-
 tasks.named('test') {
+    enabled = false
     useJUnitPlatform()
 }
 
@@ -55,6 +41,14 @@ distributions {
             exclude('*-plain.jar')
         }
     }
+}
+
+processAot{
+    enabled(false)
+}
+
+processTestAot {
+    enabled(false)
 }
 
 // task 用来新建一些目录，目录位于build/package下

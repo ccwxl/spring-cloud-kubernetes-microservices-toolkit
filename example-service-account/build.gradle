@@ -1,52 +1,38 @@
-import cn.nvr.iothub.dependency.DependencyLibrary
-
-plugins {
-    id('dependency.manager.plugin')
+jar {
+    enabled(true)
 }
 
 bootJar {
-    enabled true
+    enabled(true)
 }
 
-group 'cn.nvr.microservices.toolkit'
-version = '0.0.1'
-sourceCompatibility = '17'
+springBoot {
+    buildInfo()
+}
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+processAot {
+    enabled(false)
+}
+processTestAot {
+    enabled(false)
 }
 
 dependencies {
-    //springboot lib
     implementation(project(':spring-cloud-kubernetes-loadbalancer-debugging-starter'))
+
+    //springboot
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-    //测试环境依赖. 生产环境去除
-    developmentStage("org.springframework.boot:spring-boot-devtools")
-
-    //kubernetes
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-discovery'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-loadbalancer'
-//    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-config'
-
-    //nvr lib
 
     //springcloud
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
-    implementation DependencyLibrary.SNAKEYAML
-    implementation DependencyLibrary.CAFFEINE
 
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
+    //kubernetes
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-discovery'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-loadbalancer'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-config'
 }
 
 tasks.named('test') {

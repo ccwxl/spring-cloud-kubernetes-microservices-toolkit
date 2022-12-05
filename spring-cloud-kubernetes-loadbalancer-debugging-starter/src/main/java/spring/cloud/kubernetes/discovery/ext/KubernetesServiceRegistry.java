@@ -27,6 +27,7 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
 
     @Override
     public void register(KubernetesRegistration registration) {
+        //TODO 注册到不同的地方如redis.
         LOG.info("Registering service with kubernetes: " + registration.getServiceId());
         ServiceResource<Service> serviceResource = client.services().inNamespace(registration.getNamespace())
                 .withName(registration.getServiceId());
@@ -55,7 +56,7 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
             Endpoints endpoints = create(registration);
             Endpoints e = client.endpoints()
                     .inNamespace(registration.getNamespace())
-                    .patch(endpoints);
+                    .create(endpoints);
             LOG.info("New endpoint: {}", e);
         } else {
             Resource<Endpoints> resource = client.endpoints()
@@ -67,7 +68,7 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
                 Endpoints endpoints1 = create(registration);
                 Endpoints e = client.endpoints()
                         .inNamespace(registration.getNamespace())
-                        .patch(endpoints1);
+                        .create(endpoints1);
                 LOG.info("New endpoint: {}", e);
             } else {
                 //更新endpoint
@@ -112,7 +113,7 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
                         builder.hasMatchingAddress(a -> a.getIp().equals(registration.getHost()))
                                 && builder.hasMatchingPort(v -> v.getPort().equals(registration.getPort())))
                 .build();
-        Endpoints patchEndpoint = client.endpoints().inNamespace(registration.getNamespace()).patch(endpoints);
+        Endpoints patchEndpoint = client.endpoints().inNamespace(registration.getNamespace()).create(endpoints);
         LOG.info("De-registering Endpoint patch: {}", patchEndpoint.getSubsets());
     }
 

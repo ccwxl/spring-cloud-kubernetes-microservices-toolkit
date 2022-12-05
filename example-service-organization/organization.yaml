@@ -1,0 +1,141 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: spring-cloud-k8s
+  name: organization
+  labels:
+    app: organization
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - port: 8080
+      name: server
+      targetPort: 8080
+  selector:
+    app: organization
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: organization
+  name: organization
+  namespace: spring-cloud-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: organization
+  template:
+    metadata:
+      labels:
+        app: organization
+    spec:
+      initContainers:
+        - name: biz-organization
+          image: organization:0.0.1
+          imagePullPolicy: Never
+          command:
+            - cp
+            - /tmp/example-service-organization-0.0.1.jar
+            - /app/example-service-organization-0.0.1.jar
+          volumeMounts:
+            - mountPath: /app
+              name: jar-volume
+      containers:
+        - image: ibm-semeru-runtimes:open-17.0.5_8-jdk
+          name: organization
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          command:
+            - "java"
+          args:
+            - "-Xshareclasses:name=organization,cacheDir=/class-cache,nonfatal,persistent,verbose"
+            - "-XX:+UseContainerSupport"
+            - "-XX:MaxRAMPercentage=95.0"
+            - "-XX:MinRAMPercentage=15.0"
+            - "-XX:+HeapDumpOnOutOfMemoryError"
+            - "-XX:HeapDumpPath=./dump-%t.hprof"
+            - "-XX:+UnlockDiagnosticVMOptions"
+            - "-XX:+UnlockExperimentalVMOptions"
+            - "-XX:-OmitStackTraceInFastThrow"
+            - "-Xlog:gc*=debug:file=./gc-%t.log:utctime,level,tags:filecount=10,filesize=100M"
+            - "-XX:+DisableExplicitGC"
+            - "-XX:+UseZGC"
+            - "--add-opens"
+            - "java.base/java.lang=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.io=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.lang.invoke=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.lang.reflect=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.text=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.math=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.net=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.nio=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.security=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.text=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.time=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/java.util=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/jdk.internal.access=ALL-UNNAMED"
+            - "--add-opens"
+            - "java.base/jdk.internal.misc=ALL-UNNAMED"
+            - "-Dspring.profiles.active=test"
+            - "-Dspring.cloud.kubernetes.discovery.register.enabled=false"
+            - "-Dserver.port=8080"
+            - "-Duser.timezone=GMT+08"
+            - "-Dfile.encoding=UTF-8"
+            - "-Djava.security.egd=file:/dev/./urandom"
+            - "-Dnetworkaddress.cache.ttl=10"
+            - "-jar"
+            - "/app/example-service-organization-0.0.1.jar"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+          env:
+            - name: LANG
+              value: "zh_CN.UTF-8"
+            - name: user.language
+              value: "zh"
+            - name: user.region
+              value: "CN"
+          volumeMounts:
+            - mountPath: /app
+              name: jar-volume
+            - name: organization-class-cache
+              mountPath: /class-cache
+      volumes:
+        - name: jar-volume
+          emptyDir: { }
+        - name: organization-class-cache
+          hostPath:
+            path: /tmp/organization-class-cache
+            type: DirectoryOrCreate

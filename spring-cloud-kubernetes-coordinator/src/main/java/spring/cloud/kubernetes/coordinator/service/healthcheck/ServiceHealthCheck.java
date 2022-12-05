@@ -21,7 +21,7 @@ public class ServiceHealthCheck {
     @Autowired
     private KubernetesClient client;
 
-    public void serviceEndpointCheck() {
+    public void serviceEndpointCheck() throws InterruptedException {
         while (isRunning()) {
             List<String> services =
                     discoveryClient.getServices();
@@ -30,6 +30,8 @@ public class ServiceHealthCheck {
             //check endpoint address
 
             //check heahcheck
+
+            Thread.sleep(1000);
         }
     }
 

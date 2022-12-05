@@ -30,16 +30,16 @@ public class LoadBalanceConfig {
                                                                                    PodUtils<Pod> podUtils, ProxyProperties proxyProperties) {
         String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
         return new NetSegmentLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name,
-                environment.getProperty("spring.cloud.kubernetes.discovery.register", "false"), podUtils, proxyProperties);
+                environment.getProperty("spring.cloud.kubernetes.discovery.register.enabled", "false"), podUtils, proxyProperties);
     }
 
     @Bean
     public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
-            ConfigurableApplicationContext context, ObjectProvider<InetUtils> inetUtils) {
+            ConfigurableApplicationContext context, ObjectProvider<InetUtils> inetUtils, ProxyProperties proxyProperties) {
         ServiceInstanceListSupplier supplier = ServiceInstanceListSupplier
                 .builder()
                 .withBlockingDiscoveryClient()
                 .build(context);
-        return new NetSegmentServiceInstanceListSupplier(supplier, inetUtils);
+        return new NetSegmentServiceInstanceListSupplier(supplier, inetUtils, proxyProperties);
     }
 }

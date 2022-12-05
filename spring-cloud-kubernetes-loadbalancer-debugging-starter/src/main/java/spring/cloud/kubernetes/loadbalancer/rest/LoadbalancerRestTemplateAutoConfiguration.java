@@ -12,13 +12,14 @@ import org.springframework.web.client.RestTemplate;
 @ConditionalOnClass(RestTemplate.class)
 public class LoadbalancerRestTemplateAutoConfiguration {
 
+    /**
+     * 要放在 org.springframework.cloud.client.loadbalancer.LoadBalancerInterceptor 的后面执行
+     *
+     * @return LoadbalancerRestTemplateInterceptor
+     */
     @Bean
-    public LoadbalancerRestTemplateInterceptor loadbalancerRestTemplateInterceptor() {
-        return new LoadbalancerRestTemplateInterceptor();
-    }
+    public RestTemplateLoadBalancerRequestTransformer restTemplateLoadBalancerRequestTransformer() {
 
-    @Bean
-    public LoadbalancerRestTemplateInterceptorAfterPropertiesSet loadbalancerRestTemplateInterceptorAfterPropertiesSet() {
-        return new LoadbalancerRestTemplateInterceptorAfterPropertiesSet();
+        return new RestTemplateLoadBalancerRequestTransformer();
     }
 }

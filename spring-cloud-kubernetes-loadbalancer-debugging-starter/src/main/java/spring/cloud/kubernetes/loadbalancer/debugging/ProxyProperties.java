@@ -12,7 +12,7 @@ public class ProxyProperties {
 
     private int port;
 
-    private String prefix="/apisixproxy";
+    private String k8sNetPrefix;
 
     public String getHost() {
         return host;
@@ -30,11 +30,11 @@ public class ProxyProperties {
         this.port = port;
     }
 
-    public String getPrefix() {
-        return prefix;
+    public String getK8sNetPrefix() {
+        return k8sNetPrefix;
     }
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
+    public void setK8sNetPrefix(String k8sNetPrefix) {
+        this.k8sNetPrefix = k8sNetPrefix;
     }
 }
