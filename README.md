@@ -18,7 +18,6 @@ k8s 环境下开发调试 spring cloud 微服务
 
 ## Notice
 
-- https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#rest-http-interface 使用替换feign
 - 支持native.
 
 ## 说明.

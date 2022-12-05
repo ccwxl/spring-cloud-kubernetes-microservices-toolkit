@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * @author wxl
  * k8s external service register.
+ * TODO 注册到k8s的endpoint上. 或者redis中.
  */
 public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegistration> {
 
