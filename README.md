@@ -25,6 +25,7 @@ k8s 环境下开发调试 spring cloud 微服务
 ## 说明.
 
 - 如[flow](req-flow.puml) 所示的请求流程.
+- 将`apisix.proxy.cc`配置到`/etc/hosts`中. 指向`apisix`的`ip`
 - 坑: k8s 的service的`sessionAffinity`要为`Local`不然获取不到client的ip
 - 坑: apisix 的upstream只有一个节点时不走具体的负载均衡插件.
 - 坑: apisix 的路由匹配规则需要为. 以区分代理和正常的路由请求
