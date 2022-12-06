@@ -1,0 +1,330 @@
+[
+  {
+    "name": "io.fabric8.kubernetes.api.model.AuthInfo",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setClientCertificateData",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setClientKeyData",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setToken",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.AuthProviderConfig",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.BindingBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Cluster",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setCertificateAuthorityData",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setServer",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ComponentStatusBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ComponentStatusList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Config",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setApiVersion",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setClusters",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      },
+      {
+        "name": "setContexts",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      },
+      {
+        "name": "setCurrentContext",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setKind",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setPreferences",
+        "parameterTypes": [
+          "io.fabric8.kubernetes.api.model.Preferences"
+        ]
+      },
+      {
+        "name": "setUsers",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Context",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setCluster",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setUser",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ExecConfig",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ExecEnvVar",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.KubernetesResource",
+    "queryAllDeclaredMethods": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamedAuthInfo",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setName",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setUser",
+        "parameterTypes": [
+          "io.fabric8.kubernetes.api.model.AuthInfo"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamedCluster",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setCluster",
+        "parameterTypes": [
+          "io.fabric8.kubernetes.api.model.Cluster"
+        ]
+      },
+      {
+        "name": "setName",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamedContext",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setContext",
+        "parameterTypes": [
+          "io.fabric8.kubernetes.api.model.Context"
+        ]
+      },
+      {
+        "name": "setName",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamedExtension",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Preferences",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ReplicationControllerBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ReplicationControllerList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apps.DeploymentBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apps.DeploymentList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apps.ReplicaSetBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apps.ReplicaSetList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apps.StatefulSetBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apps.StatefulSetList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.batch.v1.JobBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.batch.v1.JobList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.batch.v1beta1.CronJobBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.batch.v1beta1.CronJobList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.certificates.v1.CertificateSigningRequestBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.certificates.v1.CertificateSigningRequestList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.extensions.DeploymentBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.extensions.DeploymentList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.extensions.ReplicaSetBuilder"
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.extensions.ReplicaSetList"
+  },
+  {
+    "name": "io.fabric8.kubernetes.internal.KubernetesDeserializer",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ]
+  }
+]

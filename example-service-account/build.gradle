@@ -4,6 +4,9 @@ jar {
 
 bootJar {
     enabled(true)
+    layered {
+        enabled = true
+    }
 }
 
 springBoot {
@@ -17,6 +20,12 @@ processAot {
 processTestAot {
     enabled(true)
 }
+
+//bootBuildImage {
+//    builder = "docker.io/paketobuildpacks/builder:tiny"
+//    runImage = "docker.io/paketobuildpacks/run:base-cnb"
+//    pullPolicy = "IF_NOT_PRESENT"
+//}
 
 dependencies {
     implementation(project(':spring-cloud-kubernetes-loadbalancer-debugging-starter'))
