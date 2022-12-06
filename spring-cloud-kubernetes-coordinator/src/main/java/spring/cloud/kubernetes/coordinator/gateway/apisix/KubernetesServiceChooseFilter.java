@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 import spring.cloud.kubernetes.loadbalancer.Cons;
 import spring.cloud.kubernetes.loadbalancer.LoadbalancerContextHolder;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -62,12 +63,17 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
     }
 
     private void doServiceChoose(PluginConfig pluginConfig, BlockingLoadBalancerClient blockingLoadBalancerClient, HttpRequest request) {
-        String sourceIp = request.getSourceIP();
+        String sourceIp;
+        if (StringUtils.hasText(pluginConfig.getRealIp())) {
+            sourceIp = request.getHeader(pluginConfig.getRealIp().toLowerCase());
+        } else {
+            sourceIp = request.getSourceIP();
+        }
         LoadbalancerContextHolder.setLoadbalancerIp(sourceIp);
         Set<LoadBalancerLifecycle> supportedLifecycleProcessors = getSupportedLifecycleProcessors(pluginConfig.getService());
         supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(ReactiveLoadBalancer.REQUEST));
         ServiceInstance serviceInstance = blockingLoadBalancerClient.choose(pluginConfig.getService(), ReactiveLoadBalancer.REQUEST);
-        log.info("gateway choose service is : [{}]", serviceInstance.getHost() + ":" + serviceInstance.getPort());
+        log.info("gateway choose service is : [{}] sourceIp: [{}]", serviceInstance.getHost() + ":" + serviceInstance.getPort(), sourceIp);
         request.setHeader(Cons.LB_IP, sourceIp);
         request.setHeader(Cons.LB_IP_PORT, serviceInstance.getHost() + ":" + serviceInstance.getPort());
         LoadbalancerContextHolder.resetLocaleContext();

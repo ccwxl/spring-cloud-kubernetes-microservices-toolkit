@@ -15,7 +15,6 @@ spring:
         all-namespaces: false
         register:
           enabled: true
-          host: 192.168.0.28 # 本机ip
           port: ${server.port}
           service-id: ${spring.application.name}
           namespace: ${spring.cloud.kubernetes.client.namespace}
@@ -33,6 +32,6 @@ spring:
 
 proxy:
   config:
-    host: apisix.proxy.cc
+    host: apisix.proxy.cc #代理服务的地址. 要添加到host中
     port: 31684
     k8s-net-prefix: 10.1;10.244

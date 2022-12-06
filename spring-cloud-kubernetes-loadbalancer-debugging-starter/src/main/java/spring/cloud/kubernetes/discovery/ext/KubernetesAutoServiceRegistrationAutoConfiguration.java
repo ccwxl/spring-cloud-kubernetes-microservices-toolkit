@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author wxl
  */
 @Configuration
-@ConditionalOnProperty(name = "spring.cloud.kubernetes.discovery.register", havingValue = "true")
+@ConditionalOnProperty(name = "spring.cloud.kubernetes.discovery.register.enabled", havingValue = "true")
 @EnableConfigurationProperties(KubernetesRegistration.class)
 @AutoConfigureAfter({AutoServiceRegistrationConfiguration.class, KubernetesServiceRegistryAutoConfiguration.class})
 public class KubernetesAutoServiceRegistrationAutoConfiguration {

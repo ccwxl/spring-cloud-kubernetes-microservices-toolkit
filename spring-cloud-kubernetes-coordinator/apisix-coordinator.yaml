@@ -192,7 +192,7 @@ data:
       stream:
         enable_access_log: false         # enable access log or not, default false
         access_log: logs/access_stream.log
-        access_log_format: "$remote_addr [$time_local] $protocol $status $bytes_sent $bytes_received $session_time"
+        access_log_format: "[$time_local] [$remote_addr] [$protocol] [$status] [$bytes_sent] [$bytes_received] [$session_time]"
                                                 # create your custom log format by visiting http://nginx.org/en/docs/varindex.html
         access_log_format_escape: default       # allows setting json or default characters escaping in variables
         lua_shared_dict:
@@ -582,6 +582,7 @@ spec:
     app.kubernetes.io/name: apisix
   type: NodePort
   externalTrafficPolicy: Local #需要获取client ip ,所以得是Local, 另外pod只能固定到一个node上.
+  internalTrafficPolicy: Local #需要获取client ip ,所以得是Local, 另外pod只能固定到一个node上.
 
 ---
 kind: ConfigMap

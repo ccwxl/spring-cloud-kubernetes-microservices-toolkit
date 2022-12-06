@@ -7,14 +7,16 @@ import io.fabric8.kubernetes.client.dsl.ServiceResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.serviceregistry.ServiceRegistry;
+import org.springframework.cloud.commons.util.InetUtils;
+import org.springframework.util.StringUtils;
 
+import java.net.InetAddress;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * @author wxl
  * k8s external service register.
- * TODO 注册到k8s的endpoint上. 或者redis中.
  */
 public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegistration> {
 
@@ -22,13 +24,15 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
 
     private final KubernetesClient client;
 
-    public KubernetesServiceRegistry(KubernetesClient client) {
+    private final InetUtils inetUtils;
+
+    public KubernetesServiceRegistry(KubernetesClient client, InetUtils inetUtils) {
         this.client = client;
+        this.inetUtils = inetUtils;
     }
 
     @Override
     public void register(KubernetesRegistration registration) {
-        //TODO 注册到不同的地方如redis.
         LOG.info("Registering service with kubernetes: " + registration.getServiceId());
         ServiceResource<Service> serviceResource = client.services().inNamespace(registration.getNamespace())
                 .withName(registration.getServiceId());
@@ -80,16 +84,16 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
                     for (EndpointSubset es : subsets) {
                         List<EndpointAddress> addresses = es.getAddresses();
                         for (EndpointAddress ea : addresses) {
-                            if (ea.getIp().equals(registration.getHost())) {
+                            if (ea.getIp().equals(getHost(registration))) {
                                 isExist = true;
                                 break;
                             }
                         }
                     }
+                    //如果不存在则不去patch
                     if (!isExist) {
-                        //如果存在则不去patch
-                        EndpointAddress endpointAddress = new EndpointAddressBuilder().withIp(registration.getHost()).build();
-                        EndpointPort endpointPort = new EndpointPortBuilder().withPort(registration.getPort()).build();
+                        EndpointAddress endpointAddress = new EndpointAddressBuilder().withIp(getHost(registration)).build();
+                        EndpointPort endpointPort = new EndpointPortBuilder().withPort(registration.getPort()).withName("local-server").build();
                         EndpointSubset endpointSubset = new EndpointSubsetBuilder().addToAddresses(endpointAddress).addToPorts(endpointPort).build();
                         endpoints.getSubsets().add(endpointSubset);
                         Endpoints patch = resource.patch(endpoints);
@@ -105,17 +109,22 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
     @Override
     public void deregister(KubernetesRegistration registration) {
         LOG.info("De-registering service with kubernetes: " + registration.getServiceId());
-        Endpoints originEndpoint = client.endpoints()
+
+        Resource<Endpoints> endpointsResource = client.endpoints()
                 .inNamespace(registration.getNamespace())
-                .withName(registration.getServiceId())
-                .get();
+                .withName(registration.getServiceId());
+
+        Endpoints originEndpoint = endpointsResource.get();
+
         Endpoints endpoints = new EndpointsBuilder(originEndpoint)
                 .removeMatchingFromSubsets(builder ->
-                        builder.hasMatchingAddress(a -> a.getIp().equals(registration.getHost()))
+                        builder.hasMatchingAddress(a -> a.getIp().equals(getHost(registration)))
                                 && builder.hasMatchingPort(v -> v.getPort().equals(registration.getPort())))
                 .build();
-        Endpoints patchEndpoint = client.endpoints().inNamespace(registration.getNamespace()).create(endpoints);
-        LOG.info("De-registering Endpoint patch: {}", patchEndpoint.getSubsets());
+
+        endpointsResource.patch(endpoints);
+
+        LOG.info("De-registering Endpoint patch: {}", endpoints.getSubsets());
     }
 
     @Override
@@ -125,17 +134,20 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
 
     @Override
     public void setStatus(KubernetesRegistration registration, String status) {
-
+        //noting to do
     }
 
     @Override
-    public <T> T getStatus(KubernetesRegistration registration) {
-
-        return null;
+    public List<EndpointSubset> getStatus(KubernetesRegistration registration) {
+        Resource<Endpoints> endpointsResource = client.endpoints()
+                .inNamespace(registration.getNamespace())
+                .withName(registration.getServiceId());
+        Endpoints originEndpoint = endpointsResource.get();
+        return originEndpoint.getSubsets();
     }
 
     private Endpoints create(KubernetesRegistration registration) {
-        EndpointAddress endpointAddress = new EndpointAddressBuilder().withIp(registration.getHost()).build();
+        EndpointAddress endpointAddress = new EndpointAddressBuilder().withIp(getHost(registration)).build();
         EndpointPort endpointPort = new EndpointPortBuilder().withPort(registration.getPort()).build();
         EndpointSubset endpointSubset = new EndpointSubsetBuilder().addToAddresses(endpointAddress).addToPorts(endpointPort).build();
         ObjectMeta metadata = new ObjectMetaBuilder()
@@ -145,4 +157,11 @@ public class KubernetesServiceRegistry implements ServiceRegistry<KubernetesRegi
         return new EndpointsBuilder().withSubsets(endpointSubset).withMetadata(metadata).build();
     }
 
+    private String getHost(KubernetesRegistration registration) {
+        if (StringUtils.hasText(registration.getHost())) {
+            return registration.getHost();
+        }
+        InetAddress inetAddress = inetUtils.findFirstNonLoopbackAddress();
+        return inetAddress.getHostAddress();
+    }
 }

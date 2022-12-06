@@ -185,8 +185,8 @@
 
 ```json
 {
-  "uri": "/apisixproxy/**",
-  "name": "apisixproxy",
+  "uri": "/*",
+  "name": "apisix-http-rpc-proxy",
   "methods": [
     "GET",
     "POST",
@@ -198,6 +198,7 @@
     "CONNECT",
     "TRACE"
   ],
+  "host": "apisix.proxy.cc",
   "upstream": {
     "nodes": [
       {
