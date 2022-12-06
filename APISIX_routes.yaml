@@ -1,0 +1,1900 @@
+components: {}
+info:
+  title: RoutesExport
+  version: 3.0.0
+openapi: 3.0.0
+paths:
+  /account/{params}:
+    connect:
+      operationId: accountCONNECT
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    delete:
+      operationId: accountDELETE
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    get:
+      operationId: accountGET
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    head:
+      operationId: accountHEAD
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    options:
+      operationId: accountOPTIONS
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    patch:
+      operationId: accountPATCH
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    post:
+      operationId: accountPOST
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    put:
+      operationId: accountPUT
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    trace:
+      operationId: accountTRACE
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391750412108418'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"account","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+  /organization/{params}:
+    connect:
+      operationId: organizationCONNECT
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    delete:
+      operationId: organizationDELETE
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    get:
+      operationId: organizationGET
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    head:
+      operationId: organizationHEAD
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    options:
+      operationId: organizationOPTIONS
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    patch:
+      operationId: organizationPATCH
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    post:
+      operationId: organizationPOST
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    put:
+      operationId: organizationPUT
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    trace:
+      operationId: organizationTRACE
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391781080859266'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"organization","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+  /uaa/{params}:
+    connect:
+      operationId: uaaCONNECT
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    delete:
+      operationId: uaaDELETE
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    get:
+      operationId: uaaGET
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    head:
+      operationId: uaaHEAD
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    options:
+      operationId: uaaOPTIONS
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    patch:
+      operationId: uaaPATCH
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    post:
+      operationId: uaaPOST
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    put:
+      operationId: uaaPUT
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    trace:
+      operationId: uaaTRACE
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      security: []
+      x-apisix-enable_websocket: false
+      x-apisix-id: '437391766786671234'
+      x-apisix-plugins:
+        ext-plugin-pre-req:
+          conf:
+            - name: KubernetesDiscoveryServiceChooseFilter
+              value: '{"service":"uaa","realIp":"X-Client-Ip"}'
+          disable: false
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+  /{params}:
+    connect:
+      operationId: apisix-http-rpc-proxyCONNECT
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    delete:
+      operationId: apisix-http-rpc-proxyDELETE
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    get:
+      operationId: apisix-http-rpc-proxyGET
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    head:
+      operationId: apisix-http-rpc-proxyHEAD
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    options:
+      operationId: apisix-http-rpc-proxyOPTIONS
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    patch:
+      operationId: apisix-http-rpc-proxyPATCH
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    post:
+      operationId: apisix-http-rpc-proxyPOST
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    put:
+      operationId: apisix-http-rpc-proxyPUT
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
+    trace:
+      operationId: apisix-http-rpc-proxyTRACE
+      parameters:
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+        - description: params in path
+          in: path
+          name: params
+          required: true
+          schema:
+            type: string
+      requestBody: {}
+      responses:
+        default:
+          description: ''
+      x-apisix-enable_websocket: false
+      x-apisix-host: apisix.proxy.cc
+      x-apisix-id: '437391833861980802'
+      x-apisix-priority: 0
+      x-apisix-status: 1
+      x-apisix-upstream:
+        nodes:
+          - host: 127.0.0.1
+            port: 8080
+            weight: 1
+          - host: 127.0.0.1
+            port: 8081
+            weight: 1
+        timeout:
+          connect: 6
+          send: 6
+          read: 6
+        type: chash
+        hash_on: header
+        key: x-lb-ip-port
+        scheme: http
+        pass_host: pass
+        keepalive_pool:
+          idle_timeout: 60
+          requests: 1000
+          size: 320
