@@ -11,10 +11,11 @@ springBoot {
 }
 
 processAot {
-    enabled(false)
+    enabled(true)
 }
+
 processTestAot {
-    enabled(false)
+    enabled(true)
 }
 
 dependencies {

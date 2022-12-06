@@ -14,6 +14,14 @@ springBoot {
     buildInfo()
 }
 
+graalvmNative {
+    binaries {
+        main {
+            mainClass = "spring.cloud.kubernetes.coordinator.CoordinatorService"
+        }
+    }
+}
+
 dependencies {
     implementation(project(":spring-cloud-kubernetes-loadbalancer-debugging-starter"))
     implementation('org.apache.apisix:apisix-runner-core:0.3.0') {

@@ -30,6 +30,15 @@ spring:
       blocking:
         enabled: true
       enabled: true
+      client:
+        health-indicator:
+          enabled: false
+    refresh:
+      enabled: false
+    openfeign:
+      client:
+        refresh-enabled: false
+      lazy-attributes-resolution: false
 
 proxy:
   config:
