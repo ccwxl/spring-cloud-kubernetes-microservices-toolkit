@@ -14,12 +14,22 @@ springBoot {
     buildInfo()
 }
 
+processAot {
+    enabled(true)
+}
+
+processTestAot {
+    enabled(true)
+}
+
 graalvmNative {
     binaries {
         main {
             mainClass = "spring.cloud.kubernetes.coordinator.CoordinatorService"
+//            buildArgs.add("--initialize-at-run-time=io.netty.channel.unix.Socket --initialize-at-run-time=io.netty.channel.unix.IovArray --initialize-at-run-time=io.netty.channel.epoll.EpollEventLoop --initialize-at-run-time=io.netty.channel.unix.Errors")
         }
     }
+
 }
 
 dependencies {
@@ -50,15 +60,6 @@ distributions {
         }
     }
 }
-
-processAot{
-    enabled(false)
-}
-
-processTestAot {
-    enabled(false)
-}
-
 // task 用来新建一些目录，目录位于build/package下
 task createDirs() {
     file('build/package/').mkdirs()

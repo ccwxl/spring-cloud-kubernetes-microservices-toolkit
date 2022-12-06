@@ -3,26 +3,32 @@ spring:
     name: coordinator
   main:
     web-application-type: NONE
+    cloud-platform: kubernetes
   profiles:
-    active: test
+    active: local
   cloud:
     kubernetes:
-      enabled: true #开启kubernetes
       discovery:
         enabled: true # 开启服务发现
-        register: false
+        register:
+          enabled: false
         catalog-services-watch:
           enabled: true
         all-namespaces: false
       loadbalancer:
-        enabled: true #开启kubernetes 服务负载均衡
         mode: POD #使用 pod 方式
+        enabled: true #开启kubernetes 服务负载均衡
       client:
         namespace: spring-cloud-k8s
     discovery:
+      blocking:
+        enabled: true
       enabled: true
-    loadbalancer:
-      enabled: true
+      client:
+        health-indicator:
+          enabled: false
+    refresh:
+      enabled: false
 
 proxy:
   config:
