@@ -13,5 +13,4 @@ public class DemoAotNativeApplication {
 
         SpringApplication.run(DemoAotNativeApplication.class, args);
     }
-
 }

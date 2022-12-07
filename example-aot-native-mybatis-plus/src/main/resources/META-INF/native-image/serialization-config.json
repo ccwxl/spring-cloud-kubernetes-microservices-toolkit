@@ -1,0 +1,11 @@
+{
+  "types": [
+  ],
+  "lambdaCapturingTypes": [
+    {
+      "name": "com.example.demo.rest.MpController"
+    }
+  ],
+  "proxies": [
+  ]
+}

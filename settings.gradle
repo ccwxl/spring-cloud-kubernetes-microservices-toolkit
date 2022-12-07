@@ -13,7 +13,7 @@ rootProject.name = 'spring-cloud-kubernetes-microservices-toolkit'
 include 'example-service-uaa',
         'example-service-organization',
         'example-service-account',
-        'example-aot-native',
+        'example-aot-native-mybatis-plus',
         'spring-cloud-kubernetes-configmap-ui',
         'spring-cloud-kubernetes-coordinator',
         'spring-cloud-kubernetes-loadbalancer-debugging-starter'

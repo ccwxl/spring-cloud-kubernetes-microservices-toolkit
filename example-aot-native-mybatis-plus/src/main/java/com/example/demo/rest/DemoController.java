@@ -1,13 +1,14 @@
-package com.example.demo;
+package com.example.demo.rest;
 
-import com.example.demo.DemoController.DemoControllerRuntimeHints;
 import com.example.demo.hello.HelloService;
 import com.example.demo.hello.ResourceHelloService;
 import com.example.demo.hello.SimpleHelloService;
-import com.example.demo.mp.Test;
-import com.example.demo.mp.TestMapper;
+import com.example.demo.rest.DemoController.DemoControllerRuntimeHints;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
-import org.springframework.aot.hint.*;
+import org.springframework.aot.hint.ExecutableMode;
+import org.springframework.aot.hint.MemberCategory;
+import org.springframework.aot.hint.RuntimeHints;
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.ImportRuntimeHints;
@@ -27,25 +28,14 @@ public class DemoController {
 
     private final ObjectProvider<HelloService> helloServices;
 
-    private final TestMapper testMapper;
-
-    DemoController(ObjectProvider<HelloService> helloServices,
-                   TestMapper testMappers) {
+    DemoController(ObjectProvider<HelloService> helloServices) {
         this.helloServices = helloServices;
-        this.testMapper = testMappers;
     }
 
     @GetMapping("/hello")
     HelloResponse hello(@RequestParam(required = false) String mode) throws Exception {
         String message = getHelloMessage(mode, "Native");
         return new HelloResponse(message);
-    }
-
-    @GetMapping("/hello/mp")
-    Test helloMp(@RequestParam(required = false) String name) throws Exception {
-        Test test = new Test(name);
-        testMapper.insert(test);
-        return test;
     }
 
     private String getHelloMessage(String mode, String name) throws Exception {

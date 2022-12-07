@@ -1,13 +1,29 @@
+jar {
+    enabled(true)
+}
+
+bootJar {
+    enabled(true)
+}
+
+springBoot {
+    buildInfo()
+}
+
+processAot {
+    enabled(true)
+}
+
+processTestAot {
+    enabled(true)
+}
+
 graalvmNative {
     binaries {
         main {
-            mainClass = "com.example.demo.DemoAotNativeApplication"
+            buildArgs.add("--add-opens java.base/java.lang.invoke=ALL-UNNAMED")
         }
     }
-}
-
-compileJava {
-    options.compilerArgs << '-parameters'
 }
 
 dependencies {
@@ -21,7 +37,6 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
 
 processAot {
     args '-debug'
