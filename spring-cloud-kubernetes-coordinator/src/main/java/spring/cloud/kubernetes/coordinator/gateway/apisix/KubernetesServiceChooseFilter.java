@@ -63,12 +63,15 @@ public class KubernetesServiceChooseFilter implements PluginFilter {
     }
 
     private void doServiceChoose(PluginConfig pluginConfig, BlockingLoadBalancerClient blockingLoadBalancerClient, HttpRequest request) {
-        String sourceIp;
+        String sourceIp = null;
         if (StringUtils.hasText(pluginConfig.getRealIp())) {
             sourceIp = request.getHeader(pluginConfig.getRealIp().toLowerCase());
-        } else {
+        }
+
+        if (!StringUtils.hasLength(sourceIp)) {
             sourceIp = request.getSourceIP();
         }
+
         LoadbalancerContextHolder.setLoadbalancerIp(sourceIp);
         Set<LoadBalancerLifecycle> supportedLifecycleProcessors = getSupportedLifecycleProcessors(pluginConfig.getService());
         supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(ReactiveLoadBalancer.REQUEST));

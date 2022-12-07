@@ -629,6 +629,15 @@
     ]
   },
   {
+    "name": "io.netty.channel.epoll.EpollServerDomainSocketChannel",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ]
+  },
+  {
     "name": "io.netty.channel.unix.DatagramSocketAddress"
   },
   {
