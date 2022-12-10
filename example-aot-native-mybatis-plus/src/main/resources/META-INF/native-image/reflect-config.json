@@ -1,0 +1,11 @@
+[
+  {
+    "name": "java.util.ArrayList",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ]
+  }
+]

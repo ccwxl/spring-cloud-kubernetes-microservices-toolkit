@@ -73,60 +73,20 @@ public class DemoController {
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
             hints.reflection().registerConstructor(org.apache.ibatis.builder.CacheRefResolver.class.getConstructors()[0], ExecutableMode.INTROSPECT);
-
             hints.reflection().registerType(org.apache.ibatis.builder.CacheRefResolver.class,
-                    MemberCategory.PUBLIC_FIELDS,
-                    MemberCategory.DECLARED_FIELDS,
-                    MemberCategory.INTROSPECT_PUBLIC_CONSTRUCTORS,
-                    MemberCategory.INTROSPECT_DECLARED_CONSTRUCTORS,
-                    MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
-                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                    MemberCategory.INTROSPECT_PUBLIC_METHODS,
-                    MemberCategory.INVOKE_PUBLIC_METHODS,
-                    MemberCategory.INVOKE_DECLARED_METHODS,
-                    MemberCategory.PUBLIC_CLASSES,
-                    MemberCategory.DECLARED_CLASSES,
-                    MemberCategory.INTROSPECT_DECLARED_METHODS);
-            hints.reflection().registerType(org.apache.ibatis.parsing.XNode.class, MemberCategory.INTROSPECT_PUBLIC_CONSTRUCTORS);
-            hints.reflection().registerType(org.apache.ibatis.builder.annotation.MethodResolver.class, MemberCategory.INTROSPECT_PUBLIC_CONSTRUCTORS);
-            hints.reflection().registerType(org.apache.ibatis.mapping.ResultFlag.class, MemberCategory.INTROSPECT_PUBLIC_CONSTRUCTORS);
-            hints.reflection().registerType(org.apache.ibatis.builder.ResultMapResolver.class, MemberCategory.INTROSPECT_PUBLIC_CONSTRUCTORS);
-
-
-            hints.reflection().registerType(org.apache.ibatis.builder.annotation.MapperAnnotationBuilder.class, MemberCategory.PUBLIC_FIELDS,
-                    MemberCategory.DECLARED_FIELDS,
-                    MemberCategory.INTROSPECT_PUBLIC_CONSTRUCTORS,
-                    MemberCategory.INTROSPECT_DECLARED_CONSTRUCTORS,
-                    MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
-                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                    MemberCategory.INTROSPECT_PUBLIC_METHODS,
-                    MemberCategory.INVOKE_PUBLIC_METHODS,
-                    MemberCategory.INVOKE_DECLARED_METHODS,
-                    MemberCategory.PUBLIC_CLASSES,
-                    MemberCategory.DECLARED_CLASSES,
-                    MemberCategory.INTROSPECT_DECLARED_METHODS);
-
-            hints.reflection().registerType(MapperBuilderAssistant.class, MemberCategory.PUBLIC_FIELDS,
-                    MemberCategory.DECLARED_FIELDS,
-                    MemberCategory.INTROSPECT_PUBLIC_CONSTRUCTORS,
-                    MemberCategory.INTROSPECT_DECLARED_CONSTRUCTORS,
-                    MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
-                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                    MemberCategory.INTROSPECT_PUBLIC_METHODS,
-                    MemberCategory.INVOKE_PUBLIC_METHODS,
-                    MemberCategory.INVOKE_DECLARED_METHODS,
-                    MemberCategory.PUBLIC_CLASSES,
-                    MemberCategory.DECLARED_CLASSES,
-                    MemberCategory.INTROSPECT_DECLARED_METHODS);
-
+                    MemberCategory.values());
+            hints.reflection().registerType(org.apache.ibatis.parsing.XNode.class, MemberCategory.values());
+            hints.reflection().registerType(org.apache.ibatis.builder.annotation.MethodResolver.class, MemberCategory.values());
+            hints.reflection().registerType(org.apache.ibatis.mapping.ResultFlag.class, MemberCategory.values());
+            hints.reflection().registerType(org.apache.ibatis.builder.ResultMapResolver.class, MemberCategory.values());
+            hints.reflection().registerType(org.apache.ibatis.builder.annotation.MapperAnnotationBuilder.class, MemberCategory.values());
+            hints.reflection().registerType(MapperBuilderAssistant.class, MemberCategory.values());
 
             hints.reflection()
                     .registerConstructor(SimpleHelloService.class.getConstructors()[0], ExecutableMode.INVOKE)
                     .registerMethod(ReflectionUtils.findMethod(SimpleHelloService.class, "sayHello", String.class), ExecutableMode.INVOKE);
 
-
             hints.resources().registerPattern("hello.txt");
-
         }
 
     }

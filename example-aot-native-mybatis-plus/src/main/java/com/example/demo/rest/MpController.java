@@ -1,20 +1,22 @@
 package com.example.demo.rest;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.demo.mp.User;
 import com.example.demo.mp.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Wrapper;
 import java.util.UUID;
 
 /**
  * @author apple
  */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class MpController {
@@ -37,9 +39,10 @@ public class MpController {
 
     @GetMapping("/mp/user")
     public User getUser(@RequestParam String ssn) {
-        User user = userService.getOne(
-                Wrappers.<User>lambdaQuery().eq(User::getSsn, ssn));
-        return user;
+        log.info("this class :[{}]", this.getClass().getName());
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = Wrappers.lambdaQuery();
+        return userService.getOne(
+                userLambdaQueryWrapper.eq(User::getSsn, ssn));
     }
 
     @GetMapping("/mp/user/wrapper")
