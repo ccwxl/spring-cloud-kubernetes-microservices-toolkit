@@ -22,9 +22,9 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
  */
 public class SofastDependencyPlugin implements Plugin<Project> {
 
-    public static final String SBV = "3.0.0";
+    public static final String SBV = "3.0.1";
 
-    public static final String SCV = "2022.0.0-RC3";
+    public static final String SCV = "2022.0.0";
 
     private static final String STAGE = "stage";
 

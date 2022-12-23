@@ -33,7 +33,7 @@ import java.util.Set;
 @Configuration(proxyBeanMethods = false)
 @SpringBootApplication
 @ImportRuntimeHints(AccountService.AccountRuntimeHints.class)
-@RegisterReflectionForBinding(value = {Service.class, IntOrString.Deserializer.class, Endpoints.class, EndpointsList.class})
+@RegisterReflectionForBinding(value = {Service.class, IntOrString.class, Endpoints.class, EndpointsList.class})
 public class AccountService {
 
     public static void main(String[] args) {

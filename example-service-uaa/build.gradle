@@ -31,9 +31,9 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
 
     //kubernetes
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-discovery'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-loadbalancer'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-kubernetes-fabric8-config'
+    implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-discovery'
+    implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-loadbalancer'
+    implementation 'org.springframework.cloud:spring-cloud-kubernetes-fabric8-config'
 }
 
 tasks.named('test') {
